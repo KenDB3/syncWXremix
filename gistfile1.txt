@@ -1,0 +1,41 @@
+{
+   "message":"accurate",
+   "cod":"200",
+   "count":1,
+   "list":[
+      {
+         "id":4140963,
+         "name":"Washington",
+         "coord":{
+            "lon":-77.032,
+            "lat":38.8904
+         },
+         "main":{
+            "temp":23.86,
+            "pressure":1024,
+            "humidity":35,
+            "temp_min":21.2,
+            "temp_max":26.6
+         },
+         "dt":1416368054,
+         "wind":{
+            "speed":4.54,
+            "deg":260
+         },
+         "sys":{
+            "country":"United States of America"
+         },
+         "clouds":{
+            "all":1
+         },
+         "weather":[
+            {
+               "id":800,
+               "main":"Clear",
+               "description":"Sky is Clear",
+               "icon":"01n"
+            }
+         ]
+      }
+   ]
+}
