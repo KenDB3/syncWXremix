@@ -8,7 +8,7 @@ function Weather() {
     this.RequestURL = new URL("http://api.wunderground.com/");
     this.current = function() { 
         var currentEndpoint = this.RequestURL.url +
-            "api/2737db6938a38e6f/conditions/q/autoip.json?geo_ip=" + user.ip_address;
+            "api/" + apiKey + "/conditions/q/autoip.json?geo_ip=" + user.ip_address;
         //          console.putmsg("\1h\1r" + currentEndpoint + "\1h\1w\r\n This is just a debug function so you can copy and paste this in your browser and see what's happening.  comment out or delete this line when you get it cause it's un-needed\r\n");
         var response = this.request.Get(currentEndpoint);
         var currentList = this.request.body;
