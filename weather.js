@@ -27,7 +27,6 @@ function getpath()
 	return(startup_path);
 }
 
-
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
 //If that proxy is on your local machine and has a private IP, this causes issues.
 //Set the Private IP to whatever your SBBS machine is using, and the public IP to any 
