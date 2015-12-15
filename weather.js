@@ -73,7 +73,7 @@ function forecast() {
 		var wh = "\001w\1h"; //Synchronet Ctrl-A Code for High Intensity White
 		var drkyl = "\001n\001y"; //Synchronet Ctrl-A Code for Dark (normal) Yellow
 		var yl = "\001y\1h"; //Synchronet Ctrl-A Code for High Intensity Yellow
-		var drkbl = "\001n\001y"; //Synchronet Ctrl-A Code for Dark (normal) Blue
+		var drkbl = "\001n\001b"; //Synchronet Ctrl-A Code for Dark (normal) Blue
 		var bl = "\001b\1h"; //Synchronet Ctrl-A Code for High Intensity Blue
 		var drkrd = "\001n\001r"; //Synchronet Ctrl-A Code for Dark (normal) Red
 		var rd = "\001r\1h"; //Synchronet Ctrl-A Code for High Intensity Red
@@ -209,7 +209,7 @@ function forecast() {
 		console.putmsg(rd + cu.alerts[0].message);
 		}
 		console.crlf();
-     		console.putmsg(gy + " syncWXremix." + drkcy + "KenDB3     " + gy + "syncWX." + yl + "nolageek     " + gy + "icons." + drkcy + "KenDB3      " + gy + "data." + drkrd + "wu" + rd + "nd" + drkyl + "er" + yl + "gr" + cy + "ou" + drkcy + "nd");
+     		console.putmsg(gy + " syncWXremix." + drkcy + "KenDB3     " + gy + "syncWX." + yl + "nolageek     " + gy + "icons." + drkcy + "KenDB3      " + gy + "data." + drkrd + "wu" + rd + "n" + drkyl + "de" + yl + "rg" + cy + "ro" + drkcy + "un" + bl + "d");
 		console.crlf();
     }
 
