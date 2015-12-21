@@ -12,6 +12,10 @@ var wungrndAPIkey = "xxxxx"; // put your wunderground API key here.
 //it just costs money for more than 500 hits per day. Sign up for at least Cumulus Plan to make sure you are getting the 
 //Severe Alerts (which I am somehow still getting with the lower Stratus Plan). 
 
+//Please choose your file extension for the weather icons (Ex: .asc, .ans, .mon, .rip)
+//Default is ".asc", make sure you include the quotes. 
+var weathericon_ext = ".asc"
+
 //getpath function liberally stolen from deuce's code for Drangon Lance
 //http://cvs.synchro.net/cgi-bin/viewcvs.cgi/xtrn/dgnlance/dgnlance.js?view=markup
 //this method of getting the icons (currently .asc) files feels better than nolageeks usage of bbs.menu
@@ -90,23 +94,23 @@ function forecast() {
 		//but you would need to define the getpath function at the top of this script (thanks to deuce) for console.printfile
 		//uncomment the text directory calls and comment out the other parts if that is your preference
 		
-		//if (!file_exists(system.text_dir + "menu/weather/" + daynighticon3 + ".asc")) {
-		if (!file_exists(getpath() + "icons/" + daynighticon3 + ".asc")) {
+		//if (!file_exists(system.text_dir + "menu/weather/" + daynighticon3 + weathericon_ext)) {
+		if (!file_exists(getpath() + "icons/" + daynighticon3 + weathericon_ext)) {
 			var daynighticon3 = "";
 		}
-		//if (!file_exists(system.text_dir + "menu/weather/" + dayicononly + ".asc")) {
-		if (!file_exists(getpath() + "icons/" + dayicononly + ".asc")) {
+		//if (!file_exists(system.text_dir + "menu/weather/" + dayicononly + weathericon_ext)) {
+		if (!file_exists(getpath() + "icons/" + dayicononly + weathericon_ext)) {
 			var dayicononly = "";
 		}
 		if (daynighticon3 != "") {
 			//bbs.menu("weather/" + daynighticon3); 
-			console.printfile(getpath() + "icons/" + daynighticon3 + ".asc");
+			console.printfile(getpath() + "icons/" + daynighticon3 + weathericon_ext);
 		} else if (dayicononly != "") {
 			//bbs.menu("weather/" + dayicononly);
-			console.printfile(getpath() + "icons/" + dayicononly + ".asc");
+			console.printfile(getpath() + "icons/" + dayicononly + weathericon_ext);
 		} else {
 			//bbs.menu("weather/unknown");
-			console.printfile(getpath() + "icons/unknown.asc");
+			console.printfile(getpath() + "icons/unknown" + weathericon_ext);
 		}
 		//Now that the icon is displayed, show the rest of the data
 		console.gotoxy(20,2);
