@@ -1,0 +1,149 @@
+syncWXremix by KenDB3
+http://bbs.kd3.us | telnet://bbs.kd3.us
+
+Table of Contents
+
+  I) Getting a Wunderground API Key
+ II) About the icons folder location
+III) External Program Configuration
+     a) Weather App (weather.js)
+     b) Icon Viewer
+
+--------------------
+
+I) Getting a Wunderground API Key
+
+You can get your API key for Wunderground here: http://api.wunderground.com/weather/api/
+
+I originally signed up for Stratus Plan because I thought that was the only free one, 
+turns out all three are free, it just costs money for more than 500 hits per day. 
+Sign up for at least Cumulus Plan to make sure you are getting the Severe Alerts 
+(which I am somehow still getting with the lower Stratus Plan but I'll probably upgrade too).
+
+--------------------
+
+II) About the icons folder location
+
+There are two methods for displaying the icons. Out-of-the-box, it will grab icons from ../xtrn/syncWX/icons/
+
+Orignally, syncWX was designed to pull the icons from a folder called "weather" inside
+of the folder "/sbbs/text/menu". This allowed the program to use the BBS Object "bbs.menu".
+nolageek originally designed it this way and it works well. 
+
+If you do use the bbs.menu option in weather.js, it will load up files with the same hierarchy of the SBBS menu. 
+Here is the section from the old http://synchro.net/docs page
+	ANS     Contains ANSI escape sequences suitable for color display
+	MON     Contains ANSI escape sequences suitable for monochrome display
+	ASC     Contains no ANSI
+All of the above file types can contain ctrl-a codes, and only the ASC file
+must exist. If a user has color ANSI, the ANS file will be displayed; if it
+doesn't exist the ASC file will be displayed. If a user has monochrome ANSI,
+the MON file will be displayed; if it doesn't exist the ANS file will be
+displayed; and if it doesn't exist the ASC file is then displayed.
+A user without ANSI will always be displayed the ASC file.
+
+However...
+I decided I wanted to keep the icon folder in a sub-folder within the main program directory.
+This makes it much simpler to package into a .ZIP, and also simpler to set up "out-of-the-box".
+This is done using the Console Object "console.printfile". 
+
+Using this I was able to keep the icons folder (this time named "icons") in the same place as the script.
+Ex: /sbbs/xtrn/syncWX/icons/ where /sbbs/xtrn/syncWX/ is where the JS script is located.
+This method requires function called "getpath" at the top of this script (thanks to deuce) which allows 
+for console.printfile to accurately grab the correct file.
+
+If you prefer the original functionality, you can uncomment the "bbs.menu" calls and 
+comment out the lines using "console.printfile". 
+
+--------------------
+
+III) External Program Configuration
+
+Setting up the Weather App (weather.js):
+
+1: Open up weather.js in a text editor like Notepad++
+
+2: Find the following code on line 9
+       var wungrndAPIkey = "xxxxx";
+   Replace xxxxx with your API Key
+
+3: Find the following code on line 17
+       var weathericon_ext = ".asc"
+   If you have added custom weather icons, make sure the file extension matches this variable
+   Example: The app comes with .ASC icons, if you changed to .ANS icons, you would put
+       var weathericon_ext = ".ans"
+   Otherwise, if you did not change the icons that came with syncWXremix, then leave this line alone
+   
+--If you host your own my.ftelnet.ca (HTMLTerm/HTML5) web socket proxy, you will want to follow steps 4 & 5
+--otherwise you can ignore steps 3 & 4 entirely
+
+4: Find the following code on line 38
+       if (user.ip_address != "192.168.1.100") {
+    Replace 192.168.1.100 with the local (LAN) IP of your BBS machine 
+	or whatever local IP is running your web socket proxy
+
+5: Find the following code on line 41
+	   var weather_ip_address = "8.8.8.8";
+	Replace 8.8.8.8 with the Public IP of your BBS
+	or whatever public IP you want to use as a default for GeoIP lookups that generate the location
+
+6: Set up the External Door via Synchornet Configuration, External Programs
+
+[weather.js]
+ 1: Name                       Your Local Weather
+ 2: Internal Code              SYNCWX
+ 3: Start-up Directory         ../xtrn/syncWX/
+ 4: Command Line               ?weather.js
+ 5: Clean-up Command Line      
+ 6: Execution Cost             None
+ 7: Access Requirements        
+ 8: Execution Requirements     
+ 9: Multiple Concurrent Users  Yes
+10: Intercept Standard I/O     No
+11: Native (32-bit) Executable No
+12: Use Shell to Execute       No
+13: Modify User Data           No
+14: Execute on Event           No (or "Logon" or "Logon, Only", it is up to you)
+15: Pause After Execution      No
+16: BBS Drop File Type         None
+17: Place Drop File In         Node Directory
+18: Time Options...
+
+----------
+
+Setting up Icon Viewer:
+
+The purpose of this script is to see the icon files that have been designed for 
+your syncWXremix app quickly and in total. This way, if you are designing your own
+icon pack for the weather, you can make sure that 1) the icons look good, and 
+2) you are not missing any of the icons you would need. 
+
+There are two javascript files: 
+iconset.js
+iconset_bbsmenu.js
+
+If you are using the stock function out of the box where icons are stored in ../xtrn/syncWX/icons/,
+then you want to use iconset.js (shown below).
+If you uncommented out the bbs.menu lines (and commented out the console.printfile) functions in weather.js,
+then you want to use iconset_bbsmenu.js (you would have to adjust line 4 to match the correct .js file).
+
+[iconset.js]
+ 1: Name                       View Icon Set
+ 2: Internal Code              WTHRICON
+ 3: Start-up Directory         ../xtrn/syncWX/
+ 4: Command Line               ?iconset.js
+ 5: Clean-up Command Line      
+ 6: Execution Cost             None
+ 7: Access Requirements        LEVEL 90
+ 8: Execution Requirements     
+ 9: Multiple Concurrent Users  Yes
+10: Intercept Standard I/O     No
+11: Native (32-bit) Executable No
+12: Use Shell to Execute       No
+13: Modify User Data           No
+14: Execute on Event           No
+15: Pause After Execution      No
+16: BBS Drop File Type         None
+17: Place Drop File In         Node Directory
+18: Time Options...
+
