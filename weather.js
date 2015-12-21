@@ -116,9 +116,9 @@ function forecast() {
 		console.gotoxy(20,4);
 		//US gets Fahrenheit then Celsius, everyone else gets Celsius then Fahrenheit
 		if (weatherCountry == "US") {
-			console.putmsg(wh + "Temp: " + yl + cu.current_observation.temperature_string);
+			console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_f + "\370 F (" + cu.current_observation.temp_c + "\370 C)");
 		} else {
-			console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_c + " C (" + cu.current_observation.temp_f + " F)");
+			console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_c + "\370 C (" + cu.current_observation.temp_f + "\370 F)");
 		}
 		console.gotoxy(20,5);
 		console.putmsg(wh + "Sunrise/Sunset: " + yl + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + wh + " / " + yl + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute);
@@ -178,13 +178,43 @@ function forecast() {
 			}
 		console.putmsg(yl + dailyConditions);
 		console.gotoxy(4+i*19,13);
+		//Try to match the length of the words "Low" and "High" so that they line up better with temps
+		//"L", "Lo", and "Low" all work well. But for the highs, avoid "Hig" as an option, 
+		//it should be "H", "Hi", or "High" - Note if dailyLow looks like "Low" we go with "High", otherwise we go with "Hi" - aesthetics...
+		if (weatherCountry == "US") {
+			var low = "Low  ";
+			var dailyLowLen = 5 - cu.forecast.simpleforecast.forecastday[i].low.fahrenheit.length;
+			var dailyLow = low.slice(0,-dailyLowLen);
+			var high = "High ";
+			var dailyHighLen = 5 - cu.forecast.simpleforecast.forecastday[i].high.fahrenheit.length;
+			var dailyHigh = high.slice(0,-dailyHighLen);
+			if (dailyHigh.length == 3 & dailyLow.length >= 3) {
+				dailyHigh = "High";
+			} else if (dailyHigh.length == 3 & dailyLow.length < 3) {
+				dailyHigh = "Hi";
+			}
+		} else {
+			var low = "Low  ";
+			var dailyLowLen = 5 - cu.forecast.simpleforecast.forecastday[i].low.celsius.length;
+			var dailyLow = low.slice(0,-dailyLowLen);
+			var high = "High ";
+			var dailyHighLen = 5 - cu.forecast.simpleforecast.forecastday[i].high.celsius.length;
+			var dailyHigh = high.slice(0,-dailyHighLen);
+			if (dailyHigh.length == 3 & dailyLow.length >= 3) {
+				dailyHigh = "High";
+			} else if (dailyHigh.length == 3 & dailyLow.length < 3) {
+				dailyHigh = "Hi";
+			}
+		}
+		console.putmsg(bl + dailyLow + wh + " / " + rd + dailyHigh);
+		console.gotoxy(4+i*19,14);
 		//US gets Fahrenheit, everyone else gets Celsius
 		if (weatherCountry == "US") {
-		console.putmsg(bl +  cu.forecast.simpleforecast.forecastday[i].low.fahrenheit
-				+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.fahrenheit + gy + " F");
+		console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.fahrenheit
+				+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.fahrenheit + gy + " \370F");
 		} else {
-		console.putmsg(bl +  cu.forecast.simpleforecast.forecastday[i].low.celsius
-				+ wh +  " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.celsius + gy + " C");
+		console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.celsius
+				+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.celsius + gy + " \370C");
 				}
 		}
 		console.gotoxy(1,21);
