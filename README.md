@@ -36,4 +36,4 @@ Please see the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/LICEN
 ## Revision History (change log)
 
 1.00 (2015-12-21)
-  *First full release, Merry Christmas!
+* First full release, Merry Christmas!
