@@ -175,8 +175,8 @@ function forecast() {
 		console.gotoxy(4+i*19,12);
 		var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
 		var dailyConditionsLen = dailyConditions.length;
-			if (dailyConditionsLen > 19) {
-				var dailyConditions = dailyConditions.slice(0,19-dailyConditionsLen);
+			if (dailyConditionsLen > 18) {
+				var dailyConditions = dailyConditions.slice(0,18-dailyConditionsLen);
 			} else {
 				var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
 			}
