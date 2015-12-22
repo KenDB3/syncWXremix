@@ -26,7 +26,7 @@ The majority of what is happening in this app is based off of one query. Note, i
 
 ## Installation
 
-Check out sysop.txt for full installation instructions.
+Check out [sysop.txt](https://github.com/KenDB3/syncWXremix/blob/master/sysop.txt) for full installation instructions.
 
 ## License
 
