@@ -61,33 +61,38 @@ III) External Program Configuration
 
 Setting up the Weather App (weather.js):
 
-1: Open up weather.js in a text editor like Notepad++
+1: If you downloaded this as a ZIP file, extract the files to a folder in your /sbbs/xtrn/ directory. This doc assumes you named the
+   folder "syncWX" (ie. /sbbs/xtrn/syncWX/). 
 
-2: Find the following code on line 9
+2: Open up weather.js in a text editor like Notepad++
+
+3: Find the following code on line 9
        var wungrndAPIkey = "xxxxx";
    Replace xxxxx with your API Key
 
-3: Find the following code on line 17
+4: Find the following code on line 17
        var weathericon_ext = ".asc"
    If you have added custom weather icons, make sure the file extension matches this variable
    Example: The app comes with .ASC icons, if you changed to .ANS icons, you would put
        var weathericon_ext = ".ans"
    Otherwise, if you did not change the icons that came with syncWXremix, then leave this line alone
    
---If you host your own my.ftelnet.ca (HTMLTerm/HTML5) web socket proxy, you will want to follow steps 4 & 5
+--If you host your own my.ftelnet.ca (HTMLTerm/HTML5) web socket proxy, you will want to follow steps 5 & 6
 --otherwise you can ignore steps 3 & 4 entirely
 
-4: Find the following code on line 38
+5: Find the following code on line 38
        if (user.ip_address != "192.168.1.100") {
     Replace 192.168.1.100 with the local (LAN) IP of your BBS machine 
 	or whatever local IP is running your web socket proxy
 
-5: Find the following code on line 41
+6: Find the following code on line 41
 	   var weather_ip_address = "8.8.8.8";
 	Replace 8.8.8.8 with the Public IP of your BBS
 	or whatever public IP you want to use as a default for GeoIP lookups that generate the location
 
-6: Set up the External Door via Synchornet Configuration, External Programs
+7: Set up the External Door via Synchornet Configuration, External Programs
+
+Setting up the main door (weather.js):
 
 [weather.js]
  1: Name                       Your Local Weather
