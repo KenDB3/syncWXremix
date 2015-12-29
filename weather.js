@@ -18,9 +18,6 @@ var weathericon_ext = ".asc"
 
 //getpath function liberally stolen from deuce's code for Drangon Lance
 //http://cvs.synchro.net/cgi-bin/viewcvs.cgi/xtrn/dgnlance/dgnlance.js?view=markup
-//this method of getting the icons (currently .asc) files feels better than nolageeks usage of bbs.menu
-//however, with bbs.menu you would automatically get preference with .ans file names if someone wanted to
-//easily replace (or partially replace) the default .asc icon set
 var startup_path='.';
 try { throw barfitty.bar.barf() } catch(e) { startup_path=e.fileName }
 startup_path=startup_path.replace(/[\/\\][^\/\\]*$/,'');
@@ -86,30 +83,17 @@ function forecast() {
 		console.clear();
 		//In this next part, I am trying to check for the existence of the file, and if it does not exist,
 		//then try one that is more likely to exist - ending with unknown.asc as the final backup.
-		//Also...
-		//two methods here:
-		//with bbs.menu you would need the icon folder (in this case named "weather") in /sbbs/text/menu/
-		//nolageek originally designed it this way and it works well, however...
-		//with console.printfile you can keep the icons folder (this time named "icons") in the same place as the script (ex: /sbbs/xtrn/weather/icons/ where /sbbs/xtrn/weather/ is where the JS script is located) 
-		//but you would need to define the getpath function at the top of this script (thanks to deuce) for console.printfile
-		//uncomment the text directory calls and comment out the other parts if that is your preference
-		
-		//if (!file_exists(system.text_dir + "menu/weather/" + daynighticon3 + weathericon_ext)) {
 		if (!file_exists(getpath() + "icons/" + daynighticon3 + weathericon_ext)) {
 			var daynighticon3 = "";
 		}
-		//if (!file_exists(system.text_dir + "menu/weather/" + dayicononly + weathericon_ext)) {
 		if (!file_exists(getpath() + "icons/" + dayicononly + weathericon_ext)) {
 			var dayicononly = "";
 		}
 		if (daynighticon3 != "") {
-			//bbs.menu("weather/" + daynighticon3); 
 			console.printfile(getpath() + "icons/" + daynighticon3 + weathericon_ext);
 		} else if (dayicononly != "") {
-			//bbs.menu("weather/" + dayicononly);
 			console.printfile(getpath() + "icons/" + dayicononly + weathericon_ext);
 		} else {
-			//bbs.menu("weather/unknown");
 			console.printfile(getpath() + "icons/unknown" + weathericon_ext);
 		}
 		//Now that the icon is displayed, show the rest of the data

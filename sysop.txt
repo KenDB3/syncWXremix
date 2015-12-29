@@ -4,10 +4,9 @@ http://bbs.kd3.us | telnet://bbs.kd3.us
 Table of Contents
 
   I) Getting a Wunderground API Key
- II) About the icons folder location
-III) External Program Configuration
+ II) External Program Configuration
      a) Weather App (weather.js)
-     b) Icon Viewer
+     b) Icon Viewer (iconset.js)
 
 --------------------
 
@@ -22,42 +21,7 @@ Sign up for at least Cumulus Plan to make sure you are getting the Severe Alerts
 
 --------------------
 
-II) About the icons folder location
-
-There are two methods for displaying the icons. Out-of-the-box, it will grab icons from ../xtrn/syncWX/icons/
-
-Orignally, syncWX was designed to pull the icons from a folder called "weather" inside
-of the folder "/sbbs/text/menu". This allowed the program to use the BBS Object "bbs.menu".
-nolageek originally designed it this way and it works well. 
-
-If you do use the bbs.menu option in weather.js, it will load up files with the same hierarchy of the SBBS menu. 
-Here is the section from the old http://synchro.net/docs page
-	ANS     Contains ANSI escape sequences suitable for color display
-	MON     Contains ANSI escape sequences suitable for monochrome display
-	ASC     Contains no ANSI
-All of the above file types can contain ctrl-a codes, and only the ASC file
-must exist. If a user has color ANSI, the ANS file will be displayed; if it
-doesn't exist the ASC file will be displayed. If a user has monochrome ANSI,
-the MON file will be displayed; if it doesn't exist the ANS file will be
-displayed; and if it doesn't exist the ASC file is then displayed.
-A user without ANSI will always be displayed the ASC file.
-
-However...
-I decided I wanted to keep the icon folder in a sub-folder within the main program directory.
-This makes it much simpler to package into a .ZIP, and also simpler to set up "out-of-the-box".
-This is done using the Console Object "console.printfile". 
-
-Using this I was able to keep the icons folder (this time named "icons") in the same place as the script.
-Ex: /sbbs/xtrn/syncWX/icons/ where /sbbs/xtrn/syncWX/ is where the JS script is located.
-This method requires function called "getpath" at the top of this script (thanks to deuce) which allows 
-for console.printfile to accurately grab the correct file.
-
-If you prefer the original functionality, you can uncomment the "bbs.menu" calls and 
-comment out the lines using "console.printfile". 
-
---------------------
-
-III) External Program Configuration
+II) External Program Configuration
 
 Setting up the Weather App (weather.js):
 
@@ -118,19 +82,13 @@ Setting up the main door (weather.js):
 
 Setting up Icon Viewer:
 
-The purpose of this script is to see the icon files that have been designed for 
+The purpose of the iconset.js script is to see the icon files that have been designed for 
 your syncWXremix app quickly and in total. This way, if you are designing your own
 icon pack for the weather, you can make sure that 1) the icons look good, and 
 2) you are not missing any of the icons you would need. 
 
-There are two javascript files: 
-iconset.js
-iconset_bbsmenu.js
-
-If you are using the stock function out of the box where icons are stored in ../xtrn/syncWX/icons/,
-then you want to use iconset.js (shown below).
-If you uncommented out the bbs.menu lines (and commented out the console.printfile) functions in weather.js,
-then you want to use iconset_bbsmenu.js (you would have to adjust line 4 to match the correct .js file).
+Note: This is not meant to be seen by anyone but a sysop, so the access requirement
+is set to LEVEL 90 (or above).
 
 [iconset.js]
  1: Name                       View Icon Set
