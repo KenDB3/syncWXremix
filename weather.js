@@ -205,12 +205,8 @@ function forecast() {
 		console.putmsg(rd + cu.alerts[0].date)
 		console.gotoxy(20,18);
 		console.putmsg(rd + "Expires " + cu.alerts[0].expires);
-		console.gotoxy(20,19);
-		console.putmsg(rd + "\001iPress any key to read the full alert\001n");
-		console.gotoxy(1,22);
-		console.crlf();
-		console.pause();
-		console.clear();
+		console.gotoxy(20,20);
+		if(console.yesno("Read the full alert"))
 		console.putmsg(rd + cu.alerts[0].message);
 		}
 		console.crlf();
