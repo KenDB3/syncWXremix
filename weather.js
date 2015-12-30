@@ -50,7 +50,29 @@ function forecast() {
 		//This query combines 4 different queries into 1 and saves you API calls that count against your free (or paid) total
 		//It pulls down info for conditions, forecast, astronomy (all 3 are Stratus Plan), and alerts (Cumulus Plan). 
 		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/autoip.json?geo_ip=" + weather_ip_address);
+		// Make sure we actually got a response. If not, log an error and exit.
+		if (current === undefined) {
+			log("ERROR in weather.js: Request to api.wunderground.com returned 'undefined'");
+			console.center("There was a problem getting data from Weather Underground.");
+			console.center("The sysop has been notified.");
+			console.pause();
+			exit();
+		}
+		// Parse the JSON response.
 		var cu = JSON.parse(current);
+		// Check if the JSON is properly formatted. The "response" should wrap the entire object.
+		if (cu.hasOwnProperty("response") ) {
+			// Check if the response contains an error message. If so, log the error and exit.
+			if (cu["response"].hasOwnProperty("error")) {
+				var errtype = cu["response"]["error"]["type"];
+				var errdesc = cu["response"]["error"]["description"];
+				log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
+				console.center("There was a problem getting data from Weather Underground.");
+				console.center("The sysop has been notified.");
+				console.pause();
+				exit();
+			}
+		}
 		var weatherCountry = cu.current_observation.display_location.country; //Figure out country, US gets fahrenheit, everywhere else gets celsius. Also US gets severe alerts.
 		var windDirection = cu.current_observation.wind_dir;
 		var daynighticon = cu.current_observation.icon_url; //the icon_url has a default .gif icon that includes day vs. night
