@@ -41,20 +41,7 @@ Setting up the Weather App (weather.js):
        var weathericon_ext = ".ans"
    Otherwise, if you did not change the icons that came with syncWXremix, then leave this line alone
    
---If you host your own my.ftelnet.ca (HTMLTerm/HTML5) web socket proxy, you will want to follow steps 5 & 6
---otherwise you can ignore steps 3 & 4 entirely
-
-5: Find the following code on line 38
-       if (user.ip_address != "192.168.1.100") {
-    Replace 192.168.1.100 with the local (LAN) IP of your BBS machine 
-	or whatever local IP is running your web socket proxy
-
-6: Find the following code on line 41
-	   var weather_ip_address = "8.8.8.8";
-	Replace 8.8.8.8 with the Public IP of your BBS
-	or whatever public IP you want to use as a default for GeoIP lookups that generate the location
-
-7: Set up the External Door via Synchornet Configuration, External Programs
+5: Set up the External Door via Synchornet Configuration, External Programs
 
 Setting up the main door (weather.js):
 
