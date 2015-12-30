@@ -9,9 +9,11 @@
 
 load("http.js");
 load("sbbsdefs.js");
+var opts=load({},"modopts.js","SyncWX"); 
 
-//Please choose your file extension for the weather icons (Ex: .asc, .ans, .mon, .rip)
-var weathericon_ext = ".asc"
+//File extension for the weather icons (Ex: .asc, .ans, .mon, .rip) is now defined in /sbbs/ctrl/modopts.ini
+//You can change it there (see sysop.txt) or hard code it into this file for testing (ex: var weathericon_ext = ".asc";)
+var weathericon_ext = opts.weathericon_ext; 
 
 function viewweathericons() {
 		var wh = "\001w\1h"; //Synchronet Ctrl-A Code for High Intensity White

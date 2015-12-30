@@ -28,20 +28,23 @@ Setting up the Weather App (weather.js):
 1: If you downloaded this as a ZIP file, extract the files to a folder in your /sbbs/xtrn/ directory. This doc assumes you named the
    folder "syncWX" (ie. /sbbs/xtrn/syncWX/). 
 
-2: Open up weather.js in a text editor like Notepad++
+2: Add the following section to your ctrl/modopts.ini file (typically located at /sbbs/ctrl/modopts.ini):
 
-3: Find the following code on line 9
-       var wungrndAPIkey = "xxxxx";
-   Replace xxxxx with your API Key
+[syncWX]
+wungrndAPIkey = <your API key here>
+weathericon_ext = .asc
 
-4: Find the following code on line 17
-       var weathericon_ext = ".asc"
-   If you have added custom weather icons, make sure the file extension matches this variable
+NOTE: No quotes are needed in the modopts.ini section you added. 
+This step is now different than version 1.00, where you entered the key directly into the weather.js file. 
+This makes updates to the weather.js file easier, since you don't have to edit the javascript each time an update lands.
+
+3: If you have added custom weather icons, make sure the file extension matches in the weathericon_ext variable in modopts.ini
    Example: The app comes with .ASC icons, if you changed to .ANS icons, you would put
-       var weathericon_ext = ".ans"
-   Otherwise, if you did not change the icons that came with syncWXremix, then leave this line alone
+       weathericon_ext = .ans
+   Otherwise, if you did not change the icons that came with syncWXremix, then keep the default modopts.ini entry of 
+       weathericon_ext = .asc
    
-5: Set up the External Door via Synchornet Configuration, External Programs
+4: Set up the External Door via Synchornet Configuration, External Programs
 
 Setting up the main door (weather.js):
 
@@ -75,7 +78,8 @@ icon pack for the weather, you can make sure that 1) the icons look good, and
 2) you are not missing any of the icons you would need. 
 
 Note: This is not meant to be seen by anyone but a sysop, so the access requirement
-is set to LEVEL 90 (or above).
+is set to LEVEL 90 (or above). Also, the icon extension is set just like in weather.js, where
+it grabs the extension from /sbbs/ctrl/modopts.ini.
 
 [iconset.js]
  1: Name                       View Icon Set
@@ -96,4 +100,3 @@ is set to LEVEL 90 (or above).
 16: BBS Drop File Type         None
 17: Place Drop File In         Node Directory
 18: Time Options...
-

@@ -6,15 +6,14 @@
 
 load("http.js"); //this loads the http libraries which you will need to make requests to the web server
 load("sbbsdefs.js"); //loads a bunch-o-stuff that is probably beyond the understanding of mere mortals 
-var wungrndAPIkey = "xxxxx"; // put your wunderground API key here. 
-//Get one here: http://api.wunderground.com/weather/api/
+var opts=load({},"modopts.js","SyncWX"); 
+var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
+//Get a wunderground API key here: http://api.wunderground.com/weather/api/
 //Note: I originally signed up for Stratus Plan because I thought that was the only free one, turns out all three are free, 
 //it just costs money for more than 500 hits per day. Sign up for at least Cumulus Plan to make sure you are getting the 
 //Severe Alerts (which I am somehow still getting with the lower Stratus Plan). 
 
-//Please choose your file extension for the weather icons (Ex: .asc, .ans, .mon, .rip)
-//Default is ".asc", make sure you include the quotes. 
-var weathericon_ext = ".asc"
+var weathericon_ext = opts.weathericon_ext; 
 
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
 //If that proxy is on your local machine and has a private IP, this causes issues.
