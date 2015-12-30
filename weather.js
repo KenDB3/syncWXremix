@@ -18,12 +18,12 @@ var weathericon_ext = ".asc"
 
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
 //If that proxy is on your local machine and has a private IP, this causes issues.
-//Set the Private IP to whatever your SBBS machine is using, and the public IP to any 
-//public IP you want. I set mine to my BBS's public static IP ... and then set it to 8.8.8.8 for GitHub as an example
-if (user.ip_address != "192.168.1.100") {
-	var weather_ip_address = user.ip_address;
+//Test for common private IP schemes (or loopback or even APIPA). 
+//If any of those match, then set the weather_ip_address to the public IP of the BBS. This is ugly, but should help out. 
+if (user.ip_address.indexOf("192.168.") == 0 | user.ip_address.indexOf("127.0.0.") == 0 | user.ip_address.indexOf("10.") == 0 | user.ip_address.indexOf("172.16.") == 0 | user.ip_address.indexOf("172.17.") == 0 | user.ip_address.indexOf("172.18.") == 0 | user.ip_address.indexOf("172.19.") == 0 | user.ip_address.indexOf("172.20.") == 0 | user.ip_address.indexOf("172.21.") == 0 | user.ip_address.indexOf("172.22.") == 0 | user.ip_address.indexOf("172.23.") == 0 | user.ip_address.indexOf("172.24.") == 0 | user.ip_address.indexOf("172.25.") == 0 | user.ip_address.indexOf("172.26.") == 0 | user.ip_address.indexOf("172.27.") == 0 | user.ip_address.indexOf("172.28.") == 0 | user.ip_address.indexOf("172.29.") == 0 | user.ip_address.indexOf("172.30.") == 0 | user.ip_address.indexOf("172.31.") == 0 | user.ip_address.indexOf("169.254.") == 0) {
+	var weather_ip_address = resolve_ip(system.inet_addr);
 } else {
-	var weather_ip_address = "8.8.8.8";
+	var weather_ip_address = user.ip_address;
 }
 
 //Make some CP437/ANSI arrows for the wind direction (Ex: wind coming from NNE = down arrow, down arrow, left arrow)
