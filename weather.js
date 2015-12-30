@@ -67,6 +67,7 @@ function forecast() {
 				var errtype = cu["response"]["error"]["type"];
 				var errdesc = cu["response"]["error"]["description"];
 				log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
+				log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/autoip.json?geo_ip=" + weather_ip_address);
 				console.center("There was a problem getting data from Weather Underground.");
 				console.center("The sysop has been notified.");
 				console.pause();
