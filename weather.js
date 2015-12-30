@@ -16,18 +16,6 @@ var wungrndAPIkey = "xxxxx"; // put your wunderground API key here.
 //Default is ".asc", make sure you include the quotes. 
 var weathericon_ext = ".asc"
 
-//getpath function liberally stolen from deuce's code for Drangon Lance
-//http://cvs.synchro.net/cgi-bin/viewcvs.cgi/xtrn/dgnlance/dgnlance.js?view=markup
-var startup_path='.';
-try { throw barfitty.bar.barf() } catch(e) { startup_path=e.fileName }
-startup_path=startup_path.replace(/[\/\\][^\/\\]*$/,'');
-startup_path=backslash(startup_path);
-
-function getpath()
-{
-	return(startup_path);
-}
-
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
 //If that proxy is on your local machine and has a private IP, this causes issues.
 //Set the Private IP to whatever your SBBS machine is using, and the public IP to any 
@@ -83,18 +71,18 @@ function forecast() {
 		console.clear();
 		//In this next part, I am trying to check for the existence of the file, and if it does not exist,
 		//then try one that is more likely to exist - ending with unknown.asc as the final backup.
-		if (!file_exists(getpath() + "icons/" + daynighticon3 + weathericon_ext)) {
+		if (!file_exists(js.exec_dir + "icons/" + daynighticon3 + weathericon_ext)) {
 			var daynighticon3 = "";
 		}
-		if (!file_exists(getpath() + "icons/" + dayicononly + weathericon_ext)) {
+		if (!file_exists(js.exec_dir + "icons/" + dayicononly + weathericon_ext)) {
 			var dayicononly = "";
 		}
 		if (daynighticon3 != "") {
-			console.printfile(getpath() + "icons/" + daynighticon3 + weathericon_ext);
+			console.printfile(js.exec_dir + "icons/" + daynighticon3 + weathericon_ext);
 		} else if (dayicononly != "") {
-			console.printfile(getpath() + "icons/" + dayicononly + weathericon_ext);
+			console.printfile(js.exec_dir + "icons/" + dayicononly + weathericon_ext);
 		} else {
-			console.printfile(getpath() + "icons/unknown" + weathericon_ext);
+			console.printfile(js.exec_dir + "icons/unknown" + weathericon_ext);
 		}
 		//Now that the icon is displayed, show the rest of the data
 		console.gotoxy(20,2);

@@ -13,18 +13,6 @@ load("sbbsdefs.js");
 //Please choose your file extension for the weather icons (Ex: .asc, .ans, .mon, .rip)
 var weathericon_ext = ".asc"
 
-//getpath function liberally stolen from deuce's code for Drangon Lance
-//http://cvs.synchro.net/cgi-bin/viewcvs.cgi/xtrn/dgnlance/dgnlance.js?view=markup
-var startup_path='.';
-try { throw barfitty.bar.barf() } catch(e) { startup_path=e.fileName }
-startup_path=startup_path.replace(/[\/\\][^\/\\]*$/,'');
-startup_path=backslash(startup_path);
-
-function getpath()
-{
-	return(startup_path);
-}
-
 function viewweathericons() {
 		var wh = "\001w\1h"; //Synchronet Ctrl-A Code for High Intensity White
 		console.clear();
@@ -33,13 +21,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/chanceflurries" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/chanceflurries" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_chanceflurries");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_chanceflurries" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_chanceflurries" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -48,13 +36,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/chancerain" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/chancerain" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_chancerain");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_chancerain" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_chancerain" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -63,13 +51,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/chancesleet" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/chancesleet" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_chancesleet");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_chancesleet" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_chancesleet" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -78,13 +66,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/chancesnow" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/chancesnow" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_chancesnow");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_chancesnow" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_chancesnow" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -93,13 +81,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/chancetstorms" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/chancetstorms" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_chancetstorms");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_chancetstorms" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_chancetstorms" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -108,13 +96,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/clear" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/clear" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_clear");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_clear" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_clear" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -123,13 +111,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/cloudy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/cloudy" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_cloudy");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_cloudy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_cloudy" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -138,13 +126,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/flurries" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/flurries" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_flurries");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_flurries" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_flurries" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -153,13 +141,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/fog" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/fog" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_fog");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_fog" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_fog" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -168,13 +156,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/hazy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/hazy" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_hazy");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_hazy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_hazy" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -183,13 +171,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/mostlycloudy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/mostlycloudy" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_mostlycloudy");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_mostlycloudy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_mostlycloudy" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -198,13 +186,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/mostlysunny" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/mostlysunny" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_mostlysunny");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_mostlysunny" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_mostlysunny" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -213,13 +201,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/partlycloudy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/partlycloudy" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_partlycloudy");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_partlycloudy" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_partlycloudy" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -228,13 +216,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/partlysunny" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/partlysunny" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_partlysunny");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_partlysunny" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_partlysunny" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -243,13 +231,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/rain" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/rain" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_rain");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_rain" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_rain" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -258,13 +246,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/sleet" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/sleet" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_sleet");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_sleet" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_sleet" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -273,13 +261,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/snow" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/snow" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_snow");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_snow" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_snow" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -288,13 +276,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/sunny" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/sunny" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_sunny");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_sunny" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_sunny" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -303,13 +291,13 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/tstorms" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/tstorms" + weathericon_ext);
 		console.crlf();console.crlf();console.crlf();
 		console.putmsg(wh + "nt_tstorms");
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/nt_tstorms" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/nt_tstorms" + weathericon_ext);
 		console.crlf();
 		console.pause();
 		console.clear();
@@ -318,7 +306,7 @@ function viewweathericons() {
 		console.crlf();
 		console.putmsg(wh + "--------------------");
 		console.crlf();
-		console.printfile(getpath() + "icons/unknown" + weathericon_ext);
+		console.printfile(js.exec_dir + "icons/unknown" + weathericon_ext);
 		console.crlf();
 		console.crlf();
 		console.putmsg(wh + "The unknown icon is a catch-all in case there is no icon found.");
