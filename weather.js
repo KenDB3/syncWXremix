@@ -51,6 +51,34 @@ function forecast() {
 		//It pulls down info for conditions, forecast, astronomy (all 3 are Stratus Plan), and alerts (Cumulus Plan). 
 		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/autoip.json?geo_ip=" + weather_ip_address);
 		var cu = JSON.parse(current);
+		//Grab error data from the JSON response and display something for the user indicative of what went wrong.
+		//This IF statement closes at the end of the forecast function, so basically it wraps most of the program.
+		if (cu.response.error != null) {
+			console.crlf(); 
+			console.putmsg("\001r\1hYour Local Weather Forecast encountered a problem..."); 
+			console.crlf();
+			console.crlf(); 
+			console.putmsg("\001w\1hError Type: \001y\1h" + cu.response.error.type);
+			console.crlf();
+			console.crlf(); 
+			console.putmsg("\001w\1hError Description: \001y\1h" + cu.response.error.description);
+			console.crlf();
+			console.crlf(); 
+			//Anyone with SYSOP level access (LEVEL 90 or greater) will also get to see what the request string looked like
+			//that was sent to wunderground.com. This might help when debugging problems for sysops setting up the door. 
+			if (user.compare_ars('SYSOP')) {
+				console.putmsg("\001b\1hYou are seeing this request string because you have \001c\001iSysop Level Access\001n\001b\1h."); 
+				console.crlf(); 
+				console.putmsg("\001b\1hYour request to wunderground.com looked like this: "); 
+				console.crlf(); 
+				console.putmsg("\001y\1h" + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/autoip.json?geo_ip=" + weather_ip_address);
+				console.crlf(); 
+				console.crlf(); 
+			}
+			console.putmsg("\001b\1hYou will now be returned to @BBS@."); 
+			console.crlf();
+			console.crlf(); 
+		} else {
 		var weatherCountry = cu.current_observation.display_location.country; //Figure out country, US gets fahrenheit, everywhere else gets celsius. Also US gets severe alerts.
 		var windDirection = cu.current_observation.wind_dir;
 		var daynighticon = cu.current_observation.icon_url; //the icon_url has a default .gif icon that includes day vs. night
@@ -212,6 +240,7 @@ function forecast() {
 		console.crlf();
      		console.putmsg(gy + " syncWXremix." + drkcy + "KenDB3     " + gy + "syncWX." + yl + "nolageek     " + gy + "icons." + drkcy + "KenDB3      " + gy + "data." + drkrd + "wu" + rd + "n" + drkyl + "de" + yl + "rg" + cy + "ro" + drkcy + "un" + bl + "d");
 		console.crlf();
+		}
     }
 
 forecast();
