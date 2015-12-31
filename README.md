@@ -21,7 +21,7 @@ Links to more screenshots:
 
 The majority of what is happening in this app is based off of one query. Note, it combines four queries into one: conditions, forecast, astronomy, and alerts.
 
-		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/autoip.json?geo_ip=" + weather_ip_address);
+		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/" + wungrndQuery);
 		var cu = JSON.parse(current);
 
 ## Installation
@@ -34,6 +34,15 @@ This project is under ISC License, and so is the artwork in the "icons" folder.
 Please see the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/LICENSE) file for the project, and the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/icons/LICENSE) file for the icons.
 
 ## Revision History (change log)
+
+1.01b (2015-12-31)
+* Lots of updates based on feedback.
+* Stopped supporting bbs.menu option, I don't think anyone was going to use it.
+* All sysop defined variables, like the Wunderground API Key, have been moved to /sbbs/ctrl/modopts.ini.
+* Automatically test for all IPv4 private and non-routable IPs, and allow Sysop to define how to fall back (with BBS IP, US Postal ZIP, or Airport Code).
+* Made weather alerts into Yes/No option.
+* Code added for error handling (thanks Kirkman!). Now errors are handled more gracefully, and useful error messages will Log on the BBS.
+* Big thank you goes out to digital man, echicken, Nightfox, Kirkman, and Mojo. Happy New Year!
 
 1.00 (2015-12-21)
 * First full release, Merry Christmas!
