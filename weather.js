@@ -1,4 +1,5 @@
 //syncWXremix by KenDB3 - http://bbs.kd3.us
+//Code for Error Handling by Kirkman - http://breakintochat.com & https://github.com/Kirkman
 //Original syncWX by nolageek - http://www.capitolshrill.com/ & https://gist.github.com/nolageek/4168edf17fae3f834e30
 //Weather Icon designs done in Ctrl-A colored ASCII (Synchronet Formatting) by KenDB3
 //Weather Icons inspired by wego (Weather Client for Terminals), created by Markus Teich <teichm@in.tum.de> - https://github.com/schachmat/wego
@@ -13,16 +14,24 @@ var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defi
 //it just costs money for more than 500 hits per day. Sign up for at least Cumulus Plan to make sure you are getting the 
 //Severe Alerts (which I am somehow still getting with the lower Stratus Plan). 
 
-var weathericon_ext = opts.weathericon_ext; 
+var weathericon_ext = opts.weathericon_ext; // Now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
+var fallback_type = opts.fallback_type; 
+var fallback = opts.fallback; 
 
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
-//If that proxy is on your local machine and has a private IP, this causes issues.
+//If that proxy is on your local machine and has a private IP, this causes issues. The same issues are seen 
+//when a sysop logs in from a private IP on their local network.
 //Test for common private IP schemes (or loopback or even APIPA). 
-//If any of those match, then set the weather_ip_address to the public IP of the BBS. This is ugly, but should help out. 
+//If any of those match, then use "fallback_type" and "fallback" from /sbbs/ctrl/modopts.ini to determine how
+//to fall back. Either with US Postal ZIP, ICAO or IATA Airport Code, or to the public IP of the BBS. 
 if (user.ip_address.indexOf("192.168.") == 0 | user.ip_address.indexOf("127.0.0.") == 0 | user.ip_address.indexOf("10.") == 0 | user.ip_address.indexOf("172.16.") == 0 | user.ip_address.indexOf("172.17.") == 0 | user.ip_address.indexOf("172.18.") == 0 | user.ip_address.indexOf("172.19.") == 0 | user.ip_address.indexOf("172.20.") == 0 | user.ip_address.indexOf("172.21.") == 0 | user.ip_address.indexOf("172.22.") == 0 | user.ip_address.indexOf("172.23.") == 0 | user.ip_address.indexOf("172.24.") == 0 | user.ip_address.indexOf("172.25.") == 0 | user.ip_address.indexOf("172.26.") == 0 | user.ip_address.indexOf("172.27.") == 0 | user.ip_address.indexOf("172.28.") == 0 | user.ip_address.indexOf("172.29.") == 0 | user.ip_address.indexOf("172.30.") == 0 | user.ip_address.indexOf("172.31.") == 0 | user.ip_address.indexOf("169.254.") == 0) {
-	var weather_ip_address = resolve_ip(system.inet_addr);
+   if (fallback_type == "nonip") {
+		var wungrndQuery = fallback + ".json";
+   } else {
+		var wungrndQuery = "autoip.json?geo_ip=" + resolve_ip(system.inet_addr);
+   }
 } else {
-	var weather_ip_address = user.ip_address;
+	var wungrndQuery = "autoip.json?geo_ip=" + user.ip_address;
 }
 
 //Make some CP437/ANSI arrows for the wind direction (Ex: wind coming from NNE = down arrow, down arrow, left arrow)
@@ -49,7 +58,7 @@ function forecast() {
         var req= new HTTPRequest();
 		//This query combines 4 different queries into 1 and saves you API calls that count against your free (or paid) total
 		//It pulls down info for conditions, forecast, astronomy (all 3 are Stratus Plan), and alerts (Cumulus Plan). 
-		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/autoip.json?geo_ip=" + weather_ip_address);
+		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/" + wungrndQuery);
 		// Make sure we actually got a response. If not, log an error and exit.
 		if (current === undefined) {
 			log("ERROR in weather.js: Request to api.wunderground.com returned 'undefined'");
@@ -67,7 +76,7 @@ function forecast() {
 				var errtype = cu["response"]["error"]["type"];
 				var errdesc = cu["response"]["error"]["description"];
 				log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
-				log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/autoip.json?geo_ip=" + weather_ip_address);
+				log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/" + wungrndQuery);
 				console.center("There was a problem getting data from Weather Underground.");
 				console.center("The sysop has been notified.");
 				console.pause();
