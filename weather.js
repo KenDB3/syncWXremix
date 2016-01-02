@@ -5,8 +5,12 @@
 //Weather Icons inspired by wego (Weather Client for Terminals), created by Markus Teich <teichm@in.tum.de> - https://github.com/schachmat/wego
 //See License file packaged with the icons for ISC License
 
+log(user.ip_address);
+
 load("http.js"); //this loads the http libraries which you will need to make requests to the web server
 load("sbbsdefs.js"); //loads a bunch-o-stuff that is probably beyond the understanding of mere mortals 
+load(js.exec_dir + 'websocket-helpers.js');
+
 var opts=load({},"modopts.js","SyncWX"); 
 var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
 //Get a wunderground API key here: http://api.wunderground.com/weather/api/
@@ -24,15 +28,30 @@ var fallback = opts.fallback;
 //Test for common private IP schemes (or loopback or even APIPA). 
 //If any of those match, then use "fallback_type" and "fallback" from /sbbs/ctrl/modopts.ini to determine how
 //to fall back. Either with US Postal ZIP, ICAO or IATA Airport Code, or to the public IP of the BBS. 
-if (user.ip_address.indexOf("192.168.") == 0 | user.ip_address.indexOf("127.0.0.") == 0 | user.ip_address.indexOf("10.") == 0 | user.ip_address.indexOf("172.16.") == 0 | user.ip_address.indexOf("172.17.") == 0 | user.ip_address.indexOf("172.18.") == 0 | user.ip_address.indexOf("172.19.") == 0 | user.ip_address.indexOf("172.20.") == 0 | user.ip_address.indexOf("172.21.") == 0 | user.ip_address.indexOf("172.22.") == 0 | user.ip_address.indexOf("172.23.") == 0 | user.ip_address.indexOf("172.24.") == 0 | user.ip_address.indexOf("172.25.") == 0 | user.ip_address.indexOf("172.26.") == 0 | user.ip_address.indexOf("172.27.") == 0 | user.ip_address.indexOf("172.28.") == 0 | user.ip_address.indexOf("172.29.") == 0 | user.ip_address.indexOf("172.30.") == 0 | user.ip_address.indexOf("172.31.") == 0 | user.ip_address.indexOf("169.254.") == 0) {
-   if (fallback_type == "nonip") {
-		var wungrndQuery = fallback + ".json";
-   } else {
-		var wungrndQuery = "autoip.json?geo_ip=" + resolve_ip(system.inet_addr);
-   }
-} else {
-	var wungrndQuery = "autoip.json?geo_ip=" + user.ip_address;
+function getQuerySuffix() {
+	var qs;
+	if (user.ip_address.search(
+			/(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^169\.254\.)|(^::1$)|(^[fF][cCdD])/
+		) > -1
+	) {
+		if (fallback_type == 'nonip') {
+			qs = fallback + '.json';
+		} else {
+			if (client.protocol === 'Telnet') {
+				qs = wstsGetIPAddress();
+			} else if (bbs.sys_status&SS_RLOGIN) {
+				qs = wsrsGetIPAddress();
+			}
+			if (typeof qs === 'undefined') qs = resolve_ip(system.inet_addr);
+			qs = 'autoip.json?geo_ip=' + qs;
+		}
+	} else {
+		qs = 'autoip.json?geo_ip=' + user.ip_address;
+	}
+	return qs;
 }
+
+var wungrndQuery = getQuerySuffix();
 
 //Make some CP437/ANSI arrows for the wind direction (Ex: wind coming from NNE = down arrow, down arrow, left arrow)
 //Think Opposite arrow than the direction, because the wind is not going in that direction, but coming from that direction.
