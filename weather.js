@@ -267,5 +267,6 @@ function forecast() {
 
 forecast();
 console.pause();
-var weather_ip_address = null;
 console.clear();
+console.aborted = false;
+exit();
