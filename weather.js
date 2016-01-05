@@ -21,6 +21,7 @@ var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defi
 var weathericon_ext = opts.weathericon_ext; // Now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
 var fallback_type = opts.fallback_type; 
 var fallback = opts.fallback; 
+var dialup = (parseInt(user.connection) > 0); // Programatically detect a SEXPOTS/dial-up connection by checking if user.connection is a number (e.g. "28800") rather than a protocol string (e.g. "Telnet").
 
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
 //If that proxy is on your local machine and has a private IP, this causes issues. The same issues are seen 
@@ -28,9 +29,18 @@ var fallback = opts.fallback;
 //Test for common private IP schemes (or loopback or even APIPA). 
 //If any of those match, then use "fallback_type" and "fallback" from /sbbs/ctrl/modopts.ini to determine how
 //to fall back. Either with US Postal ZIP, ICAO or IATA Airport Code, or to the public IP of the BBS. 
+//If you are using the new V4 Web UI from echicken, then websocket-helper.js (thanks to echicken) will attempt to report the real IP of the Web user connecting with HTML5 ftelnet
+
 function getQuerySuffix() {
 	var qs;
-	if (user.ip_address.search(
+	if (dialup === 'true')
+        	{
+        	if (fallback_type == 'nonip') {
+            		qs = fallback + '.json';
+        	} else {
+            		qs = 'autoip.json?geo_ip=' + resolve_ip(system.inet_addr);
+        	}
+    } else if (user.ip_address.search(
 			/(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^169\.254\.)|(^::1$)|(^[fF][cCdD])/
 		) > -1
 	) {
