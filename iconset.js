@@ -322,3 +322,5 @@ function viewweathericons() {
 		
 viewweathericons();
 console.clear();
+console.aborted = false;
+exit();
