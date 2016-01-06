@@ -40,6 +40,7 @@ Working on currently...
 * Better checking for private/local network users.
 * Add support for checking for dialup users.
 * Clear abort flag before terminating. Stops behavior seen by Nightfox where quitting from a pause prompt won't show any of the items when you are back at external programs menu. (Fixed in sbbs builds starting 2016-01-03, but also grab latest /ssbs/exec/xtrn_sec.js). 
+* Add display option for NON-ANSI Terminals
 
 1.01b (2015-12-31)
 * Lots of updates based on feedback.
