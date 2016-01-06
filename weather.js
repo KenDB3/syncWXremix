@@ -131,149 +131,223 @@ function forecast() {
 		console.clear();
 		//In this next part, I am trying to check for the existence of the file, and if it does not exist,
 		//then try one that is more likely to exist - ending with unknown.asc as the final backup.
-		if (!file_exists(js.exec_dir + "icons/" + daynighticon3 + weathericon_ext)) {
-			var daynighticon3 = "";
-		}
-		if (!file_exists(js.exec_dir + "icons/" + dayicononly + weathericon_ext)) {
-			var dayicononly = "";
-		}
-		if (daynighticon3 != "") {
-			console.printfile(js.exec_dir + "icons/" + daynighticon3 + weathericon_ext);
-		} else if (dayicononly != "") {
-			console.printfile(js.exec_dir + "icons/" + dayicononly + weathericon_ext);
-		} else {
-			console.printfile(js.exec_dir + "icons/unknown" + weathericon_ext);
-		}
-		//Now that the icon is displayed, show the rest of the data
-		console.gotoxy(20,2);
-		console.putmsg(wh + "Your Location: " + yl + cu.current_observation.display_location.full);
-		console.gotoxy(20,3);
-		console.putmsg(wh + "Current Conditions: " + yl + cu.current_observation.weather);
-		console.gotoxy(20,4);
-		//US gets Fahrenheit then Celsius, everyone else gets Celsius then Fahrenheit
-		if (weatherCountry == "US") {
-			console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_f + "\370 F (" + cu.current_observation.temp_c + "\370 C)");
-		} else {
-			console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_c + "\370 C (" + cu.current_observation.temp_f + "\370 F)");
-		}
-		console.gotoxy(20,5);
-		console.putmsg(wh + "Sunrise/Sunset: " + yl + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + wh + " / " + yl + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute);
-		console.gotoxy(20,6);
-		console.putmsg(wh + "Lunar Phase: " + yl + cu.moon_phase.phaseofMoon);
-		console.gotoxy(20,7);
-		console.putmsg(wh + "Wind: " + yl + cu.current_observation.wind_string);
-		if (windDirection == "N" | windDirection == "North") {
-			console.putmsg(" " + windArrowDirN);
-		} else if (windDirection == "NNE") {
-			console.putmsg(" " + windArrowDirNNE);
-		} else if (windDirection == "NE") {
-			console.putmsg(" " + windArrowDirNE);
-		} else if (windDirection == "ENE") {
-			console.putmsg(" " + windArrowDirENE);
-		} else if (windDirection == "E" | windDirection == "East") {
-			console.putmsg(" " + windArrowDirE);
-		} else if (windDirection == "ESE") {
-			console.putmsg(" " + windArrowDirESE);
-		} else if (windDirection == "SE") {
-			console.putmsg(" " + windArrowDirSE);
-		} else if (windDirection == "SSE") {
-			console.putmsg(" " + windArrowDirSSE);
-		} else if (windDirection == "S" | windDirection == "South") {
-			console.putmsg(" " + windArrowDirS);
-		} else if (windDirection == "SSW") {
-			console.putmsg(" " + windArrowDirSSW);
-		} else if (windDirection == "SW") {
-			console.putmsg(" " + windArrowDirSW);
-		} else if (windDirection == "WSW") {
-			console.putmsg(" " + windArrowDirWSW);
-		} else if (windDirection == "W" | windDirection == "West") {
-			console.putmsg(" " + windArrowDirW);
-		} else if (windDirection == "WNW") {
-			console.putmsg(" " + windArrowDirWNW);
-		} else if (windDirection == "NW") {
-			console.putmsg(" " + windArrowDirNW);
-		} else if (windDirection == "NNW") {
-			console.putmsg(" " + windArrowDirNNW);
-		} else {
-			console.putmsg("");
-		}
-		console.gotoxy(20,8);
-		console.putmsg(wh + "UV Index: " + yl + cu.current_observation.UV);
-
-//		Forecast Summary
-		for (i = 0; i < cu.forecast.simpleforecast.forecastday.length; i++) {
-		console.gotoxy(4+i*19,11);
-		console.putmsg(wh + cu.forecast.simpleforecast.forecastday[i].date.weekday);
-		console.gotoxy(4+i*19,12);
-		var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
-		var dailyConditionsLen = dailyConditions.length;
-			if (dailyConditionsLen > 18) {
-				var dailyConditions = dailyConditions.slice(0,18-dailyConditionsLen);
+		//The first section is for ANSI Terminal Users.
+		if (user.settings&USER_ANSI) {
+			if (!file_exists(js.exec_dir + "icons/" + daynighticon3 + weathericon_ext)) {
+				var daynighticon3 = "";
+			}
+			if (!file_exists(js.exec_dir + "icons/" + dayicononly + weathericon_ext)) {
+				var dayicononly = "";
+			}
+			if (daynighticon3 != "") {
+				console.printfile(js.exec_dir + "icons/" + daynighticon3 + weathericon_ext);
+			} else if (dayicononly != "") {
+				console.printfile(js.exec_dir + "icons/" + dayicononly + weathericon_ext);
 			} else {
-				var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
+				console.printfile(js.exec_dir + "icons/unknown" + weathericon_ext);
 			}
-		console.putmsg(yl + dailyConditions);
-		console.gotoxy(4+i*19,13);
-		//Try to match the length of the words "Low" and "High" so that they line up better with temps
-		//"L", "Lo", and "Low" all work well. But for the highs, avoid "Hig" as an option, 
-		//it should be "H", "Hi", or "High" - Note if dailyLow looks like "Low" we go with "High", otherwise we go with "Hi" - aesthetics...
-		if (weatherCountry == "US") {
-			var low = "Low  ";
-			var dailyLowLen = 5 - cu.forecast.simpleforecast.forecastday[i].low.fahrenheit.length;
-			var dailyLow = low.slice(0,-dailyLowLen);
-			var high = "High ";
-			var dailyHighLen = 5 - cu.forecast.simpleforecast.forecastday[i].high.fahrenheit.length;
-			var dailyHigh = high.slice(0,-dailyHighLen);
-			if (dailyHigh.length == 3 & dailyLow.length >= 3) {
-				dailyHigh = "High";
-			} else if (dailyHigh.length == 3 & dailyLow.length < 3) {
-				dailyHigh = "Hi";
-			}
+		//Force usage of .asc icons for NON-ANSI Terminal Users
 		} else {
-			var low = "Low  ";
-			var dailyLowLen = 5 - cu.forecast.simpleforecast.forecastday[i].low.celsius.length;
-			var dailyLow = low.slice(0,-dailyLowLen);
-			var high = "High ";
-			var dailyHighLen = 5 - cu.forecast.simpleforecast.forecastday[i].high.celsius.length;
-			var dailyHigh = high.slice(0,-dailyHighLen);
-			if (dailyHigh.length == 3 & dailyLow.length >= 3) {
-				dailyHigh = "High";
-			} else if (dailyHigh.length == 3 & dailyLow.length < 3) {
-				dailyHigh = "Hi";
+			if (!file_exists(js.exec_dir + "icons/" + daynighticon3 + ".asc")) {
+				var daynighticon3 = "";
+			}
+			if (!file_exists(js.exec_dir + "icons/" + dayicononly + ".asc")) {
+				var dayicononly = "";
+			}
+			if (daynighticon3 != "") {
+				console.printfile(js.exec_dir + "icons/" + daynighticon3 + ".asc");
+			} else if (dayicononly != "") {
+				console.printfile(js.exec_dir + "icons/" + dayicononly + ".asc");
+			} else {
+				console.printfile(js.exec_dir + "icons/unknown" + ".asc");
 			}
 		}
-		console.putmsg(bl + dailyLow + wh + " / " + rd + dailyHigh);
-		console.gotoxy(4+i*19,14);
-		//US gets Fahrenheit, everyone else gets Celsius
-		if (weatherCountry == "US") {
-		console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.fahrenheit
-				+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.fahrenheit + gy + " \370F");
-		} else {
-		console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.celsius
-				+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.celsius + gy + " \370C");
+
+		//Now that the icon is displayed, show the rest of the data
+		//Make a choice about how to display the data based on if the user has ANSI capabilities
+		if (user.settings&USER_ANSI) {
+			console.gotoxy(20,2);
+			console.putmsg(wh + "Your Location: " + yl + cu.current_observation.display_location.full);
+			console.gotoxy(20,3);
+			console.putmsg(wh + "Current Conditions: " + yl + cu.current_observation.weather);
+			console.gotoxy(20,4);
+			//US gets Fahrenheit then Celsius, everyone else gets Celsius then Fahrenheit
+			if (weatherCountry == "US") {
+				console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_f + "\370 F (" + cu.current_observation.temp_c + "\370 C)");
+			} else {
+				console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_c + "\370 C (" + cu.current_observation.temp_f + "\370 F)");
+			}
+			console.gotoxy(20,5);
+			console.putmsg(wh + "Sunrise/Sunset: " + yl + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + wh + " / " + yl + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute);
+			console.gotoxy(20,6);
+			console.putmsg(wh + "Lunar Phase: " + yl + cu.moon_phase.phaseofMoon);
+			console.gotoxy(20,7);
+			console.putmsg(wh + "Wind: " + yl + cu.current_observation.wind_string);
+			if (windDirection == "N" | windDirection == "North") {
+				console.putmsg(" " + windArrowDirN);
+			} else if (windDirection == "NNE") {
+				console.putmsg(" " + windArrowDirNNE);
+			} else if (windDirection == "NE") {
+				console.putmsg(" " + windArrowDirNE);
+			} else if (windDirection == "ENE") {
+				console.putmsg(" " + windArrowDirENE);
+			} else if (windDirection == "E" | windDirection == "East") {
+				console.putmsg(" " + windArrowDirE);
+			} else if (windDirection == "ESE") {
+				console.putmsg(" " + windArrowDirESE);
+			} else if (windDirection == "SE") {
+				console.putmsg(" " + windArrowDirSE);
+			} else if (windDirection == "SSE") {
+				console.putmsg(" " + windArrowDirSSE);
+			} else if (windDirection == "S" | windDirection == "South") {
+				console.putmsg(" " + windArrowDirS);
+			} else if (windDirection == "SSW") {
+				console.putmsg(" " + windArrowDirSSW);
+			} else if (windDirection == "SW") {
+				console.putmsg(" " + windArrowDirSW);
+			} else if (windDirection == "WSW") {
+				console.putmsg(" " + windArrowDirWSW);
+			} else if (windDirection == "W" | windDirection == "West") {
+				console.putmsg(" " + windArrowDirW);
+			} else if (windDirection == "WNW") {
+				console.putmsg(" " + windArrowDirWNW);
+			} else if (windDirection == "NW") {
+				console.putmsg(" " + windArrowDirNW);
+			} else if (windDirection == "NNW") {
+				console.putmsg(" " + windArrowDirNNW);
+			} else {
+				console.putmsg("");
+			}
+			console.gotoxy(20,8);
+			console.putmsg(wh + "UV Index: " + yl + cu.current_observation.UV);
+
+			//Forecast Summary
+			for (i = 0; i < cu.forecast.simpleforecast.forecastday.length; i++) {
+			console.gotoxy(4+i*19,11);
+			console.putmsg(wh + cu.forecast.simpleforecast.forecastday[i].date.weekday);
+			console.gotoxy(4+i*19,12);
+			var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
+			var dailyConditionsLen = dailyConditions.length;
+				if (dailyConditionsLen > 18) {
+					var dailyConditions = dailyConditions.slice(0,18-dailyConditionsLen);
+				} else {
+					var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
 				}
+			console.putmsg(yl + dailyConditions);
+			console.gotoxy(4+i*19,13);
+			//Try to match the length of the words "Low" and "High" so that they line up better with temps
+			//"L", "Lo", and "Low" all work well. But for the highs, avoid "Hig" as an option, 
+			//it should be "H", "Hi", or "High" - Note if dailyLow looks like "Low" we go with "High", otherwise we go with "Hi" - aesthetics...
+			if (weatherCountry == "US") {
+				var low = "Low  ";
+				var dailyLowLen = 5 - cu.forecast.simpleforecast.forecastday[i].low.fahrenheit.length;
+				var dailyLow = low.slice(0,-dailyLowLen);
+				var high = "High ";
+				var dailyHighLen = 5 - cu.forecast.simpleforecast.forecastday[i].high.fahrenheit.length;
+				var dailyHigh = high.slice(0,-dailyHighLen);
+				if (dailyHigh.length == 3 & dailyLow.length >= 3) {
+					dailyHigh = "High";
+				} else if (dailyHigh.length == 3 & dailyLow.length < 3) {
+					dailyHigh = "Hi";
+				}
+			} else {
+				var low = "Low  ";
+				var dailyLowLen = 5 - cu.forecast.simpleforecast.forecastday[i].low.celsius.length;
+				var dailyLow = low.slice(0,-dailyLowLen);
+				var high = "High ";
+				var dailyHighLen = 5 - cu.forecast.simpleforecast.forecastday[i].high.celsius.length;
+				var dailyHigh = high.slice(0,-dailyHighLen);
+				if (dailyHigh.length == 3 & dailyLow.length >= 3) {
+					dailyHigh = "High";
+				} else if (dailyHigh.length == 3 & dailyLow.length < 3) {
+					dailyHigh = "Hi";
+				}
+			}
+			console.putmsg(bl + dailyLow + wh + " / " + rd + dailyHigh);
+			console.gotoxy(4+i*19,14);
+			//US gets Fahrenheit, everyone else gets Celsius
+			if (weatherCountry == "US") {
+				console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.fahrenheit
+					+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.fahrenheit + gy + " \370F");
+			} else {
+				console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.celsius
+					+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.celsius + gy + " \370C");
+			}
+			}
+			console.gotoxy(1,21);
+			//US gets Severe Weather Alerts
+			//There is an option for European alerts via Meteoalarm, however I did not code for that for two reasons
+			//It requires a separate attribution, and (more importantly) would require a way to figure out how to limit the query to European Countries
+			if (weatherCountry == "US" && cu.alerts[0] != null) {
+				console.gotoxy(20,15);
+				console.putmsg("\007"); //Audible Bell (BEL) character - ASCII 7
+				console.gotoxy(20,16);
+				console.putmsg(drkrd + cu.alerts[0].description + ": ");
+				console.gotoxy(20,17);
+				console.putmsg(rd + cu.alerts[0].date)
+				console.gotoxy(20,18);
+				console.putmsg(rd + "Expires " + cu.alerts[0].expires);
+				console.gotoxy(20,20);
+				if(console.yesno("Read the full alert"))
+				console.putmsg(rd + cu.alerts[0].message);
+			}
+			console.crlf();
+			console.putmsg(gy + " syncWXremix." + drkcy + "KenDB3     " + gy + "syncWX." + yl + "nolageek     " + gy + "icons." + drkcy + "KenDB3      " + gy + "data." + drkrd + "wu" + rd + "n" + drkyl + "de" + yl + "rg" + cy + "ro" + drkcy + "un" + bl + "d");
+			console.crlf();
+		//This is the NON-ANSI version. Text needs to start after the icon displays. 
+		//Stripped out Color Codes and Extended ASCII (degrees symbol), as well as changed formatting around. Basically nothing fancy. 
+		//Alerts still work for US.
+		} else { 	
+			write("\r\n                   Your Location: " + cu.current_observation.display_location.full + "\r\n");
+			write("                   Current Conditions: " + cu.current_observation.weather + "\r\n");
+			//US gets Fahrenheit then Celsius, everyone else gets Celsius then Fahrenheit
+			if (weatherCountry == "US") {
+				write("                   Temp: " + cu.current_observation.temp_f + " F (" + cu.current_observation.temp_c + " C)" + "\r\n");
+			} else {
+				write("                   Temp: " + cu.current_observation.temp_c + " C (" + cu.current_observation.temp_f + " F)" + "\r\n");
+			}
+			write("                   Sunrise/Sunset: " + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + " / " + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute + "\r\n");
+			write("                   Lunar Phase: " + cu.moon_phase.phaseofMoon + "\r\n");
+			write("                   Wind: " + cu.current_observation.wind_string + "\r\n");
+			write("                   UV Index: " + cu.current_observation.UV + "\r\n\r\n");
+
+			//Forecast Summary
+			for (i = 0; i < cu.forecast.simpleforecast.forecastday.length; i++) {
+			write("                   " + cu.forecast.simpleforecast.forecastday[i].date.weekday + ": ");
+			var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
+			var dailyConditionsLen = dailyConditions.length;
+				if (dailyConditionsLen > 26) {
+					var dailyConditions = dailyConditions.slice(0,26-dailyConditionsLen);
+				} else {
+					var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
+				}
+			write(dailyConditions + " | ");
+			//US gets Fahrenheit, everyone else gets Celsius
+			if (weatherCountry == "US") {
+				write("Lo " + cu.forecast.simpleforecast.forecastday[i].low.fahrenheit
+					+ " / Hi " + cu.forecast.simpleforecast.forecastday[i].high.fahrenheit + " F" + "\r\n");
+			} else {
+				write("Lo " + cu.forecast.simpleforecast.forecastday[i].low.celsius
+					+ " / Hi " + cu.forecast.simpleforecast.forecastday[i].high.celsius + " C" + "\r\n");
+			}
+			}
+			console.crlf();
+
+			//US gets Severe Weather Alerts
+			//There is an option for European alerts via Meteoalarm, however I did not code for that for two reasons
+			//It requires a separate attribution, and (more importantly) would require a way to figure out how to limit the query to European Countries
+			if (weatherCountry == "US" && cu.alerts[0] != null) {
+				console.beep(); //Audible Bell 
+				write("    " + cu.alerts[0].description + ": " + "\r\n");
+				write("    " + cu.alerts[0].date + "\r\n")
+				write("    " + cu.alerts[0].expires + "\r\n");
+				if(console.yesno("Read the full alert"))
+				console.putmsg(cu.alerts[0].message + "\r\n");
+				console.crlf();
+			}
+			write(" syncWXremix.KenDB3     syncWX.nolageek     icons.KenDB3      data.wunderground ");
 		}
-		console.gotoxy(1,21);
-		//US gets Severe Weather Alerts
-		//There is an option for European alerts via Meteoalarm, however I did not code for that for two reasons
-		//It requires a separate attribution, and (more importantly) would require a way to figure out how to limit the query to European Countries
-		if (weatherCountry == "US" && cu.alerts[0] != null) {
-		console.gotoxy(20,15);
-		console.putmsg("\007"); //Audible Bell (BEL) character - ASCII 7
-		console.gotoxy(20,16);
-		console.putmsg(drkrd + cu.alerts[0].description + ": ");
-		console.gotoxy(20,17);
-		console.putmsg(rd + cu.alerts[0].date)
-		console.gotoxy(20,18);
-		console.putmsg(rd + "Expires " + cu.alerts[0].expires);
-		console.gotoxy(20,20);
-		if(console.yesno("Read the full alert"))
-		console.putmsg(rd + cu.alerts[0].message);
-		}
-		console.crlf();
-     		console.putmsg(gy + " syncWXremix." + drkcy + "KenDB3     " + gy + "syncWX." + yl + "nolageek     " + gy + "icons." + drkcy + "KenDB3      " + gy + "data." + drkrd + "wu" + rd + "n" + drkyl + "de" + yl + "rg" + cy + "ro" + drkcy + "un" + bl + "d");
-		console.crlf();
-    }
+}
 
 forecast();
 console.pause();
