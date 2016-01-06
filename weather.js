@@ -344,8 +344,12 @@ function forecast() {
 				if(console.yesno("Read the full alert"))
 				console.putmsg(cu.alerts[0].message + "\r\n");
 				console.crlf();
+			} else {
+				console.crlf();
+				console.crlf();
+				console.crlf();
 			}
-			write(" syncWXremix.KenDB3     syncWX.nolageek     icons.KenDB3      data.wunderground ");
+			write(" syncWXremix.KenDB3     syncWX.nolageek     icons.KenDB3      data.wunderground \r\n");
 		}
 }
 
