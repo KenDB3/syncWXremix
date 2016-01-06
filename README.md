@@ -14,6 +14,11 @@ With weather alert:
 Non-US location (aka, app using Celsius instead of Fahrenheit)
 ![Non-US Locale](http://bbs.kd3.us/screenshots/syncWX-screenshot-NL-01.png)
 
+Display Option for TTY (Mono) ASCII Only looks like this with an Alert:
+![TTY Mono ASCII 01](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only-01.png)
+![TTY Mono ASCII 02](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only-02.png)
+![TTY Mono ASCII 03](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only-03.png)
+
 Links to more screenshots:
 [Full Color and Monochrome versions of the ASCII Icon Set](http://bbs.kd3.us/screenshots/syncWX-icon-set.png)
 
