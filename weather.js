@@ -132,7 +132,7 @@ function forecast() {
 		//In this next part, I am trying to check for the existence of the file, and if it does not exist,
 		//then try one that is more likely to exist - ending with unknown.asc as the final backup.
 		//The first section is for ANSI Terminal Users.
-		if (user.settings&USER_ANSI) {
+		if(console.term_supports(USER_ANSI)) {
 			if (!file_exists(js.exec_dir + "icons/" + daynighticon3 + weathericon_ext)) {
 				var daynighticon3 = "";
 			}
@@ -165,7 +165,7 @@ function forecast() {
 
 		//Now that the icon is displayed, show the rest of the data
 		//Make a choice about how to display the data based on if the user has ANSI capabilities
-		if (user.settings&USER_ANSI) {
+		if(console.term_supports(USER_ANSI)) {
 			console.gotoxy(20,2);
 			console.putmsg(wh + "Your Location: " + yl + cu.current_observation.display_location.full);
 			console.gotoxy(20,3);
