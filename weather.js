@@ -349,7 +349,7 @@ function forecast() {
 				console.crlf();
 				console.crlf();
 			}
-			write(" syncWXremix.KenDB3     syncWX.nolageek     icons.KenDB3      data.wunderground \r\n");
+			write(" syncWXremix.KenDB3     syncWX.nolageek     icons.KenDB3      data.wunderground\r\n");
 		}
 }
 
