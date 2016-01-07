@@ -33,7 +33,7 @@ var dialup = (parseInt(user.connection) > 0); // Programatically detect a SEXPOT
 
 function getQuerySuffix() {
 	var qs;
-	if (dialup === 'true')
+	if (dialup)
         	{
         	if (fallback_type == 'nonip') {
             		qs = fallback + '.json';
