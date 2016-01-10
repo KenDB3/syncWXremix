@@ -8,6 +8,7 @@ Table of Contents
 	 a) modopts.ini
      a) Weather App (weather.js)
      b) Icon Viewer (iconset.js)
+III) Icon Files
 
 --------------------
 
@@ -51,6 +52,8 @@ This makes updates to the weather.js file easier, since you don't have to edit t
    Otherwise, if you did not change the icons that came with syncWXremix, then keep the default modopts.ini entry of 
        weathericon_ext = .asc
 
+Note: Please read section III below if you are adding a new set of custom ANSI or ASCII weather icons.
+
 4: The entry for "fallback_type" can be set to: 
 		nonip
 		bbsip
@@ -73,6 +76,9 @@ a) nonip - Choosing this means you must set the entry for "fallback" to either a
 				fallback = KPVD
 			
 b) bbsip - weather.js will automatically grab the public IP address of your BBS.
+		   Or, if you are using the new Synchronet v4 WebUI from echicken, it will attempt
+		   to figure out the real IP address when a caller is using the HTML 5 ftelnet 
+		   browser terminal client, which uses Web Sockets to connect. 
            In this case, "fallback" does not need to be set to anything. 
    
 5: Set up the External Door via Synchornet Configuration, External Programs
@@ -131,3 +137,20 @@ it grabs the extension from /sbbs/ctrl/modopts.ini.
 16: BBS Drop File Type         None
 17: Place Drop File In         Node Directory
 18: Time Options...
+
+--------------------
+
+III) Icon Files
+
+When designing new icons in ANSI (.ans files), please make sure to keep the set of 
+ASCII (.asc) icons in the icons folder. You can change the weathericon_ext setting 
+in your /sbbs/xtrl/modopts.ini file, but if your user/caller is not ANSI capable, 
+the program will fall back to the ASCII icon set automatically. Simply adding your 
+ANSI icons to the icons folder and changing the weathericon_ext setting will 
+override the ASCII icons for any of your ANSI capable callers. This includes ANSI 
+callers who only have Mono capabilities instead of Color ANSI. If you are replacing 
+the ASCII icons with new CTRL-A encoded ASCII files, then this should be just fine 
+for non-ANSI callers who have TTY (Mono) ASCII Only as Synchronet will attempt to 
+convert the characters for those users, but, keep in mind, if you are using 
+Extended ASCII characters in your icon designs, this may not look as good to a 
+non-ANSI terminal user. 

@@ -1,5 +1,6 @@
 //syncWXremix by KenDB3 - http://bbs.kd3.us
 //Code for Error Handling by Kirkman - http://breakintochat.com & https://github.com/Kirkman
+//Code for detection of a Web Socket client's Real IP address by echicken - http://bbs.electronicchicken.com/ & https://github.com/echicken
 //Original syncWX by nolageek - http://www.capitolshrill.com/ & https://gist.github.com/nolageek/4168edf17fae3f834e30
 //Weather Icon designs done in Ctrl-A colored ASCII (Synchronet Formatting) by KenDB3
 //Weather Icons inspired by wego (Weather Client for Terminals), created by Markus Teich <teichm@in.tum.de> - https://github.com/schachmat/wego

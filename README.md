@@ -8,16 +8,15 @@ Regular View:
 ![Regular View](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-01.png)
 
 With weather alert:
-![Weather Alert 01](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-alerts-01.png)
-![Weather Alert 02](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-alerts-02.png)
+![Weather Alert 01](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-Alert-New-01.png)
+![Weather Alert 02](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-Alert-New-02.png)
+![Weather Alert 02](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-Alert-New-03.png)
 
 Non-US location (aka, app using Celsius instead of Fahrenheit)
-![Non-US Locale](http://bbs.kd3.us/screenshots/syncWX-screenshot-NL-01.png)
+![Non-US Locale](http://bbs.kd3.us/screenshots/syncWX-screenshot-IT-Rome-Airport-01.png)
 
 Display Option for TTY (Mono) ASCII Only looks like this with an Alert:
-![TTY Mono ASCII 01](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only-01.png)
-![TTY Mono ASCII 02](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only-02.png)
-![TTY Mono ASCII 03](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only-03.png)
+![TTY Mono ASCII 01](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only.png)
 
 Links to more screenshots:
 [Full Color and Monochrome versions of the ASCII Icon Set](http://bbs.kd3.us/screenshots/syncWX-icon-set.png)
@@ -40,12 +39,12 @@ Please see the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/LICEN
 
 ## Revision History (change log)
 
-Working on currently...
+1.02 (2016-01-09)
 * Functions for retrieving a WebSocket client's real IP address.
 * Better checking for private/local network users.
 * Add support for checking for dialup users.
 * Clear abort flag before terminating. Stops behavior seen by Nightfox where quitting from a pause prompt won't show any of the items when you are back at external programs menu. (Fixed in sbbs builds starting 2016-01-03, but also grab latest /ssbs/exec/xtrn_sec.js). 
-* Add display option for NON-ANSI Terminals
+* Add display option for non-ANSI Terminals. The text was originally there, but came out unformatted. Now it looks much prettier.
 
 1.01b (2015-12-31)
 * Lots of updates based on feedback.
