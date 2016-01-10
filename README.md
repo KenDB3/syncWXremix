@@ -4,21 +4,21 @@
 
 ## Screenshots 
 
-Regular View:
+Regular View:  
 ![Regular View](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-01.png)
 
-With weather alert:
+With weather alert:  
 ![Weather Alert 01](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-Alert-New-01.png)
 ![Weather Alert 02](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-Alert-New-02.png)
 ![Weather Alert 02](http://bbs.kd3.us/screenshots/syncWX-screenshot-RI-Alert-New-03.png)
 
-Non-US location (aka, app using Celsius instead of Fahrenheit)
+Non-US location (aka, app using Celsius instead of Fahrenheit):  
 ![Non-US Locale](http://bbs.kd3.us/screenshots/syncWX-screenshot-IT-Rome-Airport-01.png)
 
-Display Option for TTY (Mono) ASCII Only looks like this with an Alert:
+Display Option for TTY (Mono) ASCII Only looks like this with an Alert:  
 ![TTY Mono ASCII 01](http://bbs.kd3.us/screenshots/TTY-Mono-ASCII-Only.png)
 
-Links to more screenshots:
+Links to more screenshots:  
 [Full Color and Monochrome versions of the ASCII Icon Set](http://bbs.kd3.us/screenshots/syncWX-icon-set.png)
 
 ## Code Example
