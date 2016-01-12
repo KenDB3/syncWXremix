@@ -30,20 +30,22 @@ var dialup = (parseInt(user.connection) > 0); // Programatically detect a SEXPOT
 //Test for common private IP schemes (or loopback or even APIPA). 
 //If any of those match, then use "fallback_type" and "fallback" from /sbbs/ctrl/modopts.ini to determine how
 //to fall back. Either with US Postal ZIP, ICAO or IATA Airport Code, or to the public IP of the BBS. 
-//If you are using the new V4 Web UI from echicken, then websocket-helper.js (thanks to echicken) will attempt to report the real IP of the Web user connecting with HTML5 ftelnet
+//websocket-helper.js (thanks to echicken) will attempt to report the real IP of the Web user connecting with HTML5 ftelnet on a Telnet connection when using exec/websocket-telnet-service.js as a proxy. 
+//If you are using the new V4 Web UI from echicken, then you will also be able to get the real IP of a user through RLogin when a user is logged into the V4 WebUI and using exec/websocket-rlogin-service.js as a proxy.
 
 function getQuerySuffix() {
 	var qs;
+	var ip = resolve_ip(system.inet_addr);
 	if (dialup)
         	{
         	if (fallback_type == 'nonip') {
             		qs = fallback + '.json';
         	} else {
-            		qs = 'autoip.json?geo_ip=' + resolve_ip(system.inet_addr);
+            		qs = 'autoip.json?geo_ip=' + ip;
         	}
     } else if (user.ip_address.search(
 			/(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^169\.254\.)|(^::1$)|(^[fF][cCdD])/
-		) > -1
+		) > -1 || user.ip_address === ip
 	) {
 		if (fallback_type == 'nonip') {
 			qs = fallback + '.json';
@@ -53,7 +55,7 @@ function getQuerySuffix() {
 			} else if (bbs.sys_status&SS_RLOGIN) {
 				qs = wsrsGetIPAddress();
 			}
-			if (typeof qs === 'undefined') qs = resolve_ip(system.inet_addr);
+			if (typeof qs === 'undefined') qs = ip;
 			qs = 'autoip.json?geo_ip=' + qs;
 		}
 	} else {
