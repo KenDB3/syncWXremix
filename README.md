@@ -39,6 +39,11 @@ Please see the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/LICEN
 
 ## Revision History (change log)
 
+1.03 (2016-01-25)
+* Just some bug fixes...
+* Tweak getQuerySuffix to also check if the web socket proxy is reported as the public IP of the BBS. This now works with the new websocket-telnet-service.js, websocket-rlogin-service.js, and websocket-proxy.js.
+* Fix user.number bug in websocket-helpers.js that was popping up in the Web Socket RLogin section. 
+
 1.02 (2016-01-09)
 * Functions for retrieving a WebSocket client's real IP address.
 * Better checking for private/local network users.
