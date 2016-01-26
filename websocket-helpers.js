@@ -63,7 +63,7 @@ function wstsGetIPAddress() {
 
 function wsrsGetIPAddress() {
 
-	var fn = format('%suser/%04d.web', system.data_dir, un);
+	var fn = format('%suser/%04d.web', system.data_dir, user.number);
 	if (!file_exists(fn)) return;
 	var f = new File(fn);
 	if (!f.open('r')) return;
