@@ -318,7 +318,7 @@ function forecast() {
 
 			//Forecast Summary
 			for (i = 0; i < cu.forecast.simpleforecast.forecastday.length; i++) {
-			write("                   " + cu.forecast.simpleforecast.forecastday[i].date.weekday + ": ");
+			write("         " + cu.forecast.simpleforecast.forecastday[i].date.weekday + ": ");
 			var dailyConditions = cu.forecast.simpleforecast.forecastday[i].conditions;
 			var dailyConditionsLen = dailyConditions.length;
 				if (dailyConditionsLen > 26) {
@@ -343,9 +343,10 @@ function forecast() {
 			//It requires a separate attribution, and (more importantly) would require a way to figure out how to limit the query to European Countries
 			if (weatherCountry == "US" && cu.alerts[0] != null) {
 				console.beep(); //Audible Bell 
-				write("    " + cu.alerts[0].description + ": " + "\r\n");
-				write("    " + cu.alerts[0].date + "\r\n")
-				write("    " + cu.alerts[0].expires + "\r\n");
+				write("                   " + cu.alerts[0].description + ": " + "\r\n");
+				write("                   " + cu.alerts[0].date + "\r\n")
+				write("                   " + cu.alerts[0].expires + "\r\n");
+				write("               ");
 				if(console.yesno("Read the full alert"))
 				console.putmsg(cu.alerts[0].message + "\r\n");
 				console.crlf();
