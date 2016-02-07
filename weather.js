@@ -293,7 +293,7 @@ function forecast() {
 				console.gotoxy(20,18);
 				console.putmsg(rd + "Expires " + cu.alerts[0].expires);
 				console.gotoxy(20,20);
-				if(console.yesno("Read the full alert"))
+				if(console.noyes("Read the full alert") === false)
 				console.putmsg(rd + cu.alerts[0].message);
 			}
 			console.crlf();
@@ -347,7 +347,7 @@ function forecast() {
 				write("                   " + cu.alerts[0].date + "\r\n")
 				write("                   " + cu.alerts[0].expires + "\r\n");
 				write("               ");
-				if(console.yesno("Read the full alert"))
+				if(console.noyes("Read the full alert") === false)
 				console.putmsg(cu.alerts[0].message + "\r\n");
 				console.crlf();
 			} else {
