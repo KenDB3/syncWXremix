@@ -11,6 +11,7 @@ log(user.ip_address);
 load("http.js"); //this loads the http libraries which you will need to make requests to the web server
 load("sbbsdefs.js"); //loads a bunch-o-stuff that is probably beyond the understanding of mere mortals 
 load(js.exec_dir + 'websocket-helpers.js');
+load(js.exec_dir + 'wxlanguage.js');
 
 var opts=load({},"modopts.js","SyncWX"); 
 var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
@@ -172,22 +173,22 @@ function forecast() {
 		//Make a choice about how to display the data based on if the user has ANSI capabilities
 		if(console.term_supports(USER_ANSI)) {
 			console.gotoxy(20,2);
-			console.putmsg(wh + "Your Location: " + yl + cu.current_observation.display_location.full);
+			console.putmsg(wh + LocationHeader + yl + cu.current_observation.display_location.full);
 			console.gotoxy(20,3);
-			console.putmsg(wh + "Current Conditions: " + yl + cu.current_observation.weather);
+			console.putmsg(wh + ConditionsHeader + yl + cu.current_observation.weather);
 			console.gotoxy(20,4);
 			//US gets Fahrenheit then Celsius, everyone else gets Celsius then Fahrenheit
 			if (weatherCountry == "US") {
-				console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_f + "\370 F (" + cu.current_observation.temp_c + "\370 C)");
+				console.putmsg(wh + TempHeader + yl + cu.current_observation.temp_f + "\370 F (" + cu.current_observation.temp_c + "\370 C)");
 			} else {
-				console.putmsg(wh + "Temp: " + yl + cu.current_observation.temp_c + "\370 C (" + cu.current_observation.temp_f + "\370 F)");
+				console.putmsg(wh + TempHeader + yl + cu.current_observation.temp_c + "\370 C (" + cu.current_observation.temp_f + "\370 F)");
 			}
 			console.gotoxy(20,5);
-			console.putmsg(wh + "Sunrise/Sunset: " + yl + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + wh + " / " + yl + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute);
+			console.putmsg(wh + SunHeader + yl + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + wh + " / " + yl + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute);
 			console.gotoxy(20,6);
-			console.putmsg(wh + "Lunar Phase: " + yl + cu.moon_phase.phaseofMoon);
+			console.putmsg(wh + LunarHeader + yl + cu.moon_phase.phaseofMoon);
 			console.gotoxy(20,7);
-			console.putmsg(wh + "Wind: " + yl + cu.current_observation.wind_string);
+			console.putmsg(wh + WindHeader + yl + cu.current_observation.wind_string);
 			if (windDirection == "N" | windDirection == "North") {
 				console.putmsg(" " + windArrowDirN);
 			} else if (windDirection == "NNE") {
@@ -224,7 +225,7 @@ function forecast() {
 				console.putmsg("");
 			}
 			console.gotoxy(20,8);
-			console.putmsg(wh + "UV Index: " + yl + cu.current_observation.UV);
+			console.putmsg(wh + UVHeader + yl + cu.current_observation.UV);
 
 			//Forecast Summary
 			for (i = 0; i < cu.forecast.simpleforecast.forecastday.length; i++) {
@@ -291,9 +292,9 @@ function forecast() {
 				console.gotoxy(20,17);
 				console.putmsg(rd + cu.alerts[0].date)
 				console.gotoxy(20,18);
-				console.putmsg(rd + "Expires " + cu.alerts[0].expires);
+				console.putmsg(rd + AlertExpires + cu.alerts[0].expires);
 				console.gotoxy(20,20);
-				if(console.noyes("Read the full alert") === false)
+				if(console.noyes(ReadAlert) === false)
 				console.putmsg(rd + cu.alerts[0].message);
 			}
 			console.crlf();
@@ -303,18 +304,18 @@ function forecast() {
 		//Stripped out Color Codes and Extended ASCII (degrees symbol), as well as changed formatting around. Basically nothing fancy. 
 		//Alerts still work for US.
 		} else { 	
-			write("\r\n                   Your Location: " + cu.current_observation.display_location.full + "\r\n");
-			write("                   Current Conditions: " + cu.current_observation.weather + "\r\n");
+			write("\r\n                   " + LocationHeader + cu.current_observation.display_location.full + "\r\n");
+			write("                   " + ConditionsHeader + cu.current_observation.weather + "\r\n");
 			//US gets Fahrenheit then Celsius, everyone else gets Celsius then Fahrenheit
 			if (weatherCountry == "US") {
-				write("                   Temp: " + cu.current_observation.temp_f + " F (" + cu.current_observation.temp_c + " C)" + "\r\n");
+				write("                   " + TempHeader + cu.current_observation.temp_f + " F (" + cu.current_observation.temp_c + " C)" + "\r\n");
 			} else {
-				write("                   Temp: " + cu.current_observation.temp_c + " C (" + cu.current_observation.temp_f + " F)" + "\r\n");
+				write("                   " + TempHeader + cu.current_observation.temp_c + " C (" + cu.current_observation.temp_f + " F)" + "\r\n");
 			}
-			write("                   Sunrise/Sunset: " + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + " / " + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute + "\r\n");
-			write("                   Lunar Phase: " + cu.moon_phase.phaseofMoon + "\r\n");
-			write("                   Wind: " + cu.current_observation.wind_string + "\r\n");
-			write("                   UV Index: " + cu.current_observation.UV + "\r\n\r\n");
+			write("                   " + SunHeader + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + " / " + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute + "\r\n");
+			write("                   " + LunarHeader + cu.moon_phase.phaseofMoon + "\r\n");
+			write("                   " + WindHeader + cu.current_observation.wind_string + "\r\n");
+			write("                   " + UVHeader + cu.current_observation.UV + "\r\n\r\n");
 
 			//Forecast Summary
 			for (i = 0; i < cu.forecast.simpleforecast.forecastday.length; i++) {
@@ -345,9 +346,9 @@ function forecast() {
 				console.beep(); //Audible Bell 
 				write("                   " + cu.alerts[0].description + ": " + "\r\n");
 				write("                   " + cu.alerts[0].date + "\r\n")
-				write("                   " + cu.alerts[0].expires + "\r\n");
+				write("                   " + AlertExpires + cu.alerts[0].expires + "\r\n");
 				write("               ");
-				if(console.noyes("Read the full alert") === false)
+				if(console.noyes(ReadAlert) === false)
 				console.putmsg(cu.alerts[0].message + "\r\n");
 				console.crlf();
 			} else {
