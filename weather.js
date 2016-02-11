@@ -91,7 +91,7 @@ function forecast() {
         var req= new HTTPRequest();
 		//This query combines 4 different queries into 1 and saves you API calls that count against your free (or paid) total
 		//It pulls down info for conditions, forecast, astronomy (all 3 are Stratus Plan), and alerts (Cumulus Plan). 
-		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/" + wungrndQuery);
+		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
 		// Make sure we actually got a response. If not, log an error and exit.
 		if (current === undefined) {
 			log("ERROR in weather.js: Request to api.wunderground.com returned 'undefined'");
