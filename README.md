@@ -41,6 +41,7 @@ Please see the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/LICEN
 
 1.04 (2016-02-10)
 * Minor change: Severe Weather Alerts are now a No/Yes prompt instead of Yes/No. This will speed up Logon Events for users that hit the enter key quickly to get to the main menu.
+* Retooled some spacing/positioning for the Non-ANSI TTY Mono ASCII version.
 
 1.03 (2016-01-25)
 * Just some bug fixes...
