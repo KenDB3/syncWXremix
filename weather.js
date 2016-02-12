@@ -23,6 +23,7 @@ var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defi
 var weathericon_ext = opts.weathericon_ext; // Now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
 var fallback_type = opts.fallback_type; 
 var fallback = opts.fallback; 
+var language = opts.language;
 var dialup = (parseInt(user.connection) > 0); // Programatically detect a SEXPOTS/dial-up connection by checking if user.connection is a number (e.g. "28800") rather than a protocol string (e.g. "Telnet").
 
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
@@ -87,6 +88,14 @@ var wungrndQuery = getQuerySuffix();
 		var windArrowDirNW = "\001h\001y\031\020";
 		var windArrowDirNNW = "\001h\001y\031\031\020";
 
+//Decide what type of Degree Symbol we should use based on the language chosen in /ctrl/modopts.ini
+//I am assuming if you are using a different language than English there will be a need for UTF-8 support to get the encoding to look good
+		if (language == "en") {
+			var degreeSymbol = "\370"; //ANSI/CP437 Degree Symbol
+		} else {
+			var degreeSymbol = "°"; //ASCII/UTF-8 Compatible Degree Symbol (tested with PuTTY using UTF-8 Translation and Courier Font)
+		}
+		
 function forecast() {
         var req= new HTTPRequest();
 		//This query combines 4 different queries into 1 and saves you API calls that count against your free (or paid) total
@@ -179,9 +188,9 @@ function forecast() {
 			console.gotoxy(20,4);
 			//US gets Fahrenheit then Celsius, everyone else gets Celsius then Fahrenheit
 			if (weatherCountry == "US") {
-				console.putmsg(wh + TempHeader + yl + cu.current_observation.temp_f + "\370 F (" + cu.current_observation.temp_c + "\370 C)");
+				console.putmsg(wh + TempHeader + yl + cu.current_observation.temp_f + degreeSymbol + " F (" + cu.current_observation.temp_c + degreeSymbol + " C)");
 			} else {
-				console.putmsg(wh + TempHeader + yl + cu.current_observation.temp_c + "\370 C (" + cu.current_observation.temp_f + "\370 F)");
+				console.putmsg(wh + TempHeader + yl + cu.current_observation.temp_c + degreeSymbol + " C (" + cu.current_observation.temp_f + degreeSymbol + " F)");
 			}
 			console.gotoxy(20,5);
 			console.putmsg(wh + SunHeader + yl + cu.moon_phase.sunrise.hour + ":" + cu.moon_phase.sunrise.minute + wh + " / " + yl + cu.moon_phase.sunset.hour + ":" + cu.moon_phase.sunset.minute);
@@ -274,10 +283,10 @@ function forecast() {
 			//US gets Fahrenheit, everyone else gets Celsius
 			if (weatherCountry == "US") {
 				console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.fahrenheit
-					+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.fahrenheit + gy + " \370F");
+					+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.fahrenheit + gy + " " + degreeSymbol + "F");
 			} else {
 				console.putmsg(bl + cu.forecast.simpleforecast.forecastday[i].low.celsius
-					+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.celsius + gy + " \370C");
+					+ wh + " / " + rd + cu.forecast.simpleforecast.forecastday[i].high.celsius + gy + " " + degreeSymbol + "C");
 			}
 			}
 			console.gotoxy(1,21);
