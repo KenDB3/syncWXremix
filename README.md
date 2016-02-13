@@ -23,9 +23,10 @@ Links to more screenshots:
 
 ## Code Example
 
-The majority of what is happening in this app is based off of one query. Note, it combines four queries into one: conditions, forecast, astronomy, and alerts.
+The majority of what is happening in this app is based off of one query. Note, it combines four queries into one: conditions, forecast, astronomy, and alerts. It also adds through the "WXlang" variable the possibility for results in over 80 languages.
 
-		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/q/" + wungrndQuery);
+		var req= new HTTPRequest();
+		var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
 		var cu = JSON.parse(current);
 
 ## Installation
@@ -38,6 +39,10 @@ This project is under ISC License, and so is the artwork in the "icons" folder.
 Please see the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/LICENSE) file for the project, and the [LICENSE](https://github.com/KenDB3/syncWXremix/blob/master/icons/LICENSE) file for the icons.
 
 ## Revision History (change log)
+
+Currently working on...
+* Internationalization (i18n) support.
+* UTF-8/Unicode Symbols to go with i18n, like degrees, maybe the wind direction arrows (not sure on the arrows).
 
 1.04 (2016-02-10)
 * Minor change: Severe Weather Alerts are now a No/Yes prompt instead of Yes/No. This will speed up Logon Events for users that hit the enter key quickly to get to the main menu.
