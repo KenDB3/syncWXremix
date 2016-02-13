@@ -88,14 +88,6 @@ var wungrndQuery = getQuerySuffix();
 		var windArrowDirNW = "\001h\001y\031\020";
 		var windArrowDirNNW = "\001h\001y\031\031\020";
 
-//Decide what type of Degree Symbol we should use based on the language chosen in /ctrl/modopts.ini
-//I am assuming if you are using a different language than English there will be a need for UTF-8 support to get the encoding to look good
-		if (language == "en") {
-			var degreeSymbol = "\370"; //ANSI/CP437 Degree Symbol
-		} else {
-			var degreeSymbol = "°"; //ASCII/UTF-8 Compatible Degree Symbol (tested with PuTTY using UTF-8 Translation and Courier Font)
-		}
-		
 function forecast() {
         var req= new HTTPRequest();
 		//This query combines 4 different queries into 1 and saves you API calls that count against your free (or paid) total
