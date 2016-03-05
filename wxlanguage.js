@@ -6,7 +6,13 @@
 //Example: "language = en"
 var opts=load({},"modopts.js","SyncWX"); 
 
-if (opts.language === undefined) { //Default to English if this field is left blank or does not exist in modopts.ini
+if (typeof opts.language === 'undefined') {
+	var language = 'en'; //Default to English if this field is left blank or does not exist in modopts.ini
+} else {
+	var language = opts.language //otherwise, load the chosen language
+}
+
+if (language.toLowerCase() == "en") { //English
 	WXlang = "lang:EN/";
 	LocationHeader = "Your Location: ";
 	ConditionsHeader = "Current Conditions: ";
@@ -17,18 +23,7 @@ if (opts.language === undefined) { //Default to English if this field is left bl
 	UVHeader = "UV Index: ";
 	AlertExpires = "Expires ";
 	ReadAlert = "Read the Full Alert";
-} else if (opts.language.toLowerCase() == "en") { //English
-	WXlang = "lang:EN/";
-	LocationHeader = "Your Location: ";
-	ConditionsHeader = "Current Conditions: ";
-	TempHeader = "Temp: ";
-	SunHeader = "Sunrise/Sunset: ";
-	LunarHeader = "Lunar Phase: ";
-	WindHeader = "Wind: ";
-	UVHeader = "UV Index: ";
-	AlertExpires = "Expires ";
-	ReadAlert = "Read the Full Alert";
-} else if (opts.language.toLowerCase() == "sp") { //Español
+} else if (language.toLowerCase() == "sp") { //Español
 	WXlang = "lang:SP/";
 	LocationHeader = "Lugar: ";
 	ConditionsHeader = "Condiciones Actuales: ";
@@ -39,7 +34,7 @@ if (opts.language === undefined) { //Default to English if this field is left bl
 	UVHeader = "Ultravioleta: ";
 	AlertExpires = "Expira ";
 	ReadAlert = "Leer l'Alerta";
-} else if (opts.language.toLowerCase() == "it") { //Italiano
+} else if (language.toLowerCase() == "it") { //Italiano
 	WXlang = "lang:IT/";
 	LocationHeader = "Posto: ";
 	ConditionsHeader = "Condizioni Attuali: ";
@@ -65,7 +60,7 @@ if (opts.language === undefined) { //Default to English if this field is left bl
 
 //Decide what type of Degree Symbol we should use based on the language chosen in /ctrl/modopts.ini
 //I am assuming if you are using a language other than English there will be a need for UTF-8 support to get the encoding to look good
-if (opts.language.toLowerCase() == "en") {
+if (language.toLowerCase() == "en") {
 	var degreeSymbol = "\370"; //ANSI/CP437 Degree Symbol
 } else {
 	var degreeSymbol = "°"; //ASCII/UTF-8 Compatible Degree Symbol (tested with PuTTY using UTF-8 Translation and Courier Font)
