@@ -23,7 +23,6 @@ var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defi
 var weathericon_ext = opts.weathericon_ext; // Now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
 var fallback_type = opts.fallback_type; 
 var fallback = opts.fallback; 
-var language = opts.language;
 var dialup = (parseInt(user.connection) > 0); // Programatically detect a SEXPOTS/dial-up connection by checking if user.connection is a number (e.g. "28800") rather than a protocol string (e.g. "Telnet").
 
 //If a user connects through HTMLterm (HTML5 fTelnet @ my.ftelnet.ca), then it goes through a proxy. 
