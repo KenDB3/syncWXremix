@@ -361,8 +361,25 @@ function forecast() {
 		}
 }
 
-forecast();
-console.pause();
-console.clear();
-console.aborted = false;
+try {
+
+    forecast();
+    console.pause();
+    console.clear();
+    console.aborted = false;
+
+} catch (err) {
+
+log("ERROR in weather.js. " + err);
+log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
+log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
+log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
+log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
+
+} finally {
+
+    exit();
+
+}
+
 exit();
