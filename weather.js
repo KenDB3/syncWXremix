@@ -95,9 +95,7 @@ function forecast() {
 		// Make sure we actually got a response. If not, log an error and exit.
 		if (current === undefined) {
 			log("ERROR in weather.js: Request to api.wunderground.com returned 'undefined'");
-			console.center("There was a problem getting data from Weather Underground.");
-			console.center("The sysop has been notified.");
-			console.pause();
+			log("ERROR in weather.js: More than likely the entire request to the API failed and that could mean wunderground.com or the API itself is down.");
 			exit();
 		}
 		// Parse the JSON response.
@@ -113,9 +111,6 @@ function forecast() {
 				log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
 				log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
 				log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
-				console.center("There was a problem getting data from Weather Underground.");
-				console.center("The sysop has been notified.");
-				console.pause();
 				exit();
 			}
 		}
