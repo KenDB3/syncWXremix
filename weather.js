@@ -67,6 +67,31 @@ function getQuerySuffix() {
 
 var wungrndQuery = getQuerySuffix();
 
+//I'm not sure if this is entirely necessary seeing as this is for backup purposes, but I am covering my bases as best as I can
+function getBackupSuffix() {
+	var bs;
+	var ip = resolve_ip(system.inet_addr);
+	if (dialup)
+    {
+     	bs = ip;
+    } else if (user.ip_address.search(
+			/(^127\.)|(^192\.168\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^169\.254\.)|(^::1$)|(^[fF][cCdD])/
+		) > -1 || user.ip_address === ip
+	) {
+		if (client.protocol === 'Telnet') {
+			bs = wstsGetIPAddress();
+		} else if (bbs.sys_status&SS_RLOGIN) {
+			bs = wsrsGetIPAddress();
+		}
+		if (typeof bs === 'undefined') bs = ip;
+	} else {
+		bs = user.ip_address;
+	}
+	return bs;
+}
+
+var backupQuery = getBackupSuffix();
+
 //Make some CP437/ANSI arrows for the wind direction (Ex: wind coming from NNE = down arrow, down arrow, left arrow)
 //Think Opposite arrow than the direction, because the wind is not going in that direction, but coming from that direction.
 //Concept modified from wego - https://github.com/schachmat/wego
@@ -106,12 +131,42 @@ function forecast() {
 			if (cu["response"].hasOwnProperty("error")) {
 				var errtype = cu["response"]["error"]["type"];
 				var errdesc = cu["response"]["error"]["description"];
-				log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
-				log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
-				log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
-				log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
-				log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
-				exit();
+				//Due to a lengthy period of intermittent results for IP lookups with api.wunderground.com, I am introducing a backup GeoIP lookup.
+				//The specific error that is typically associated with this, is querynotfound. If we encounter that, attempt to use http://geoip.nekudo.com/api/[ip-address] as our lookup, as this does not require one to get an API Key and is free to use.
+				//Usable results from nekudo are the Latitude and Longitude coordinates, which has a good success rate with Wunderground even when the API is having a hard time with GeoIP lookups. 
+				if (errtype == "querynotfound") {
+					log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
+					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: bbs.kd3.us/weather/wunderground-error-Query-Not-Found.json");
+					log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
+					log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
+					log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
+					log("INFO for weather.js. Query to api.wunderground.com returned querynotfound, so trying to detect location with backup GeoIP service http://geoip.nekudo.com/api/. No API key is required for this service.");
+					var backupGeoIP = req.Get("http://geoip.nekudo.com/api/" + backupQuery);
+						if (backupGeoIP === undefined) {
+							log("ERROR in weather.js: Request to backup GeoIP service http://geoip.nekudo.com/api/ returned 'undefined'");
+							exit();
+						}
+					var buGeo = JSON.parse(backupGeoIP);
+						if ((buGeo["location"]["latitude"] == "37.751" && buGeo["location"]["longitude"] == "-97.822") || buGeo["city"] == "false") {
+							log(LOG_DEBUG,"Nekudo results for condition 1: " + buGeo["location"]["latitude"] + " " + buGeo["location"]["longitude"] + " " + buGeo["city"]);
+							log("INFO for weather.js: " + wungrndQuery + " lookup returned unknown location data, using fallback");
+							var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + fallback + ".json");
+							var cu = JSON.parse(current);
+						} else {
+							log(LOG_DEBUG,"INFO for weather.js: Used http://geoip.nekudo.com/api/" + wungrndQuery + ". Nekudo results for condition 2: " + buGeo["location"]["latitude"] + " " + buGeo["location"]["longitude"] + " " + buGeo["city"]);
+							log("INFO for weather.js: http://geoip.nekudo.com/api/ was used for this lookup");
+							log("INFO for weather.js: API Call to Wunderground was http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + buGeo["location"]["latitude"] + "," + buGeo["location"]["longitude"] + ".json");
+							var current = req.Get("http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + buGeo["location"]["latitude"] + "," + buGeo["location"]["longitude"] + ".json");
+							var cu = JSON.parse(current);
+						}
+				} else {
+					log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
+					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: bbs.kd3.us/weather/wunderground-error-Query-Not-Found.json");
+					log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
+					log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
+					log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
+					exit();
+				}
 			}
 		}
 		var weatherCountry = cu.current_observation.display_location.country; //Figure out country, US gets fahrenheit, everywhere else gets celsius. Also US gets severe alerts.
