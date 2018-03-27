@@ -19,7 +19,26 @@ if (opts === null) {
 load("http.js"); //this loads the http libraries which you will need to make requests to the web server
 load("sbbsdefs.js"); //loads a bunch-o-stuff that is probably beyond the understanding of mere mortals 
 load(js.exec_dir + 'websocket-helpers.js');
-load(js.exec_dir + 'wxlanguage.js');
+
+//Try to load new wxlanguage.js file, but default to English if it is missing
+try {
+	load(js.exec_dir + 'wxlanguage.js');
+} catch (err) {
+	log("ERROR in weather.js. " + err);
+	log("ERROR in weather.js. Language will default to English. For alternate language support, get wxlanguage.js at https://raw.githubusercontent.com/KenDB3/syncWXremix/master/wxlanguage.js");
+} finally {
+	WXlang = "";
+	LocationHeader = "Your Location: ";
+	ConditionsHeader = "Current Conditions: ";
+	TempHeader = "Temp: ";
+	SunHeader = "Sunrise/Sunset: ";
+	LunarHeader = "Lunar Phase: ";
+	WindHeader = "Wind: ";
+	UVHeader = "UV Index: ";
+	AlertExpires = "Expires ";
+	ReadAlert = "Read the Full Alert";
+	degreeSymbol = "\370"; //ANSI/CP437 Degree Symbol
+}
 
 var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
 //Get a wunderground API key here: http://api.wunderground.com/weather/api/
