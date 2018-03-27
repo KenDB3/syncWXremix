@@ -8,12 +8,19 @@
 
 log(user.ip_address);
 
+//Load modopts.ini info early so we can detect if the section exists for [SyncWX]
+var opts=load({},"modopts.js","SyncWX"); 
+if (opts === null) {
+	log("ERROR in weather.js: opts is null.");
+	log("ERROR in weather.js: Are you sure you have a section in modopts.ini labeled [SyncWX]? See sysop.txt for instructions.");
+	exit();
+}
+
 load("http.js"); //this loads the http libraries which you will need to make requests to the web server
 load("sbbsdefs.js"); //loads a bunch-o-stuff that is probably beyond the understanding of mere mortals 
 load(js.exec_dir + 'websocket-helpers.js');
 load(js.exec_dir + 'wxlanguage.js');
 
-var opts=load({},"modopts.js","SyncWX"); 
 var wungrndAPIkey = opts.wungrndAPIkey; // Your wunderground API key is now defined in the file /sbbs/ctrl/modopts.ini - see the sysop.txt instructions.
 //Get a wunderground API key here: http://api.wunderground.com/weather/api/
 //Note: I originally signed up for Stratus Plan because I thought that was the only free one, turns out all three are free, 
