@@ -165,6 +165,9 @@ function forecast() {
 					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
 					log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
 					log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
+					log(LOG_DEBUG,"DEBUG for weather.js. The weather icon extension defined in /ctrl/modopts.ini is: " + opts.weathericon_ext);
+					log(LOG_DEBUG,"DEBUG for weather.js. The fallback type defined in /ctrl/modopts.ini is: " + opts.fallback_type);
+					log(LOG_DEBUG,"DEBUG for weather.js. The fallback defined in /ctrl/modopts.ini is: " + opts.fallback);
 					log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
 					log("INFO for weather.js. Query to api.wunderground.com returned querynotfound, so trying to detect location with backup GeoIP service http://geoip.nekudo.com/api/. No API key is required for this service.");
 					var backupGeoIP = req.Get("http://geoip.nekudo.com/api/" + backupQuery);
@@ -190,6 +193,9 @@ function forecast() {
 					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
 					log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
 					log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
+					log(LOG_DEBUG,"DEBUG for weather.js. The weather icon extension defined in /ctrl/modopts.ini is: " + opts.weathericon_ext);
+					log(LOG_DEBUG,"DEBUG for weather.js. The fallback type defined in /ctrl/modopts.ini is: " + opts.fallback_type);
+					log(LOG_DEBUG,"DEBUG for weather.js. The fallback defined in /ctrl/modopts.ini is: " + opts.fallback);
 					log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
 					exit();
 				}
@@ -450,6 +456,9 @@ log("ERROR in weather.js. " + err);
 log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
 log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
 log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
+log(LOG_DEBUG,"DEBUG for weather.js. The weather icon extension defined in /ctrl/modopts.ini is: " + opts.weathericon_ext);
+log(LOG_DEBUG,"DEBUG for weather.js. The fallback type defined in /ctrl/modopts.ini is: " + opts.fallback_type);
+log(LOG_DEBUG,"DEBUG for weather.js. The fallback defined in /ctrl/modopts.ini is: " + opts.fallback);
 log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
 
 } finally {
