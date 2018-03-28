@@ -162,7 +162,7 @@ function forecast() {
 				//Usable results from nekudo are the Latitude and Longitude coordinates, which has a good success rate with Wunderground even when the API is having a hard time with GeoIP lookups. 
 				if (errtype == "querynotfound") {
 					log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
-					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: bbs.kd3.us/weather/wunderground-error-Query-Not-Found.json");
+					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
 					log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
 					log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
 					log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
@@ -187,7 +187,7 @@ function forecast() {
 						}
 				} else {
 					log("ERROR in weather.js: api.wunderground.com returned a '" + errtype + "' error with this description: '" + errdesc + "'.");
-					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: bbs.kd3.us/weather/wunderground-error-Query-Not-Found.json");
+					log(LOG_DEBUG,"DEBUG for weather.js. API call looked like this at time of error: " + "http://api.wunderground.com/api/" + wungrndAPIkey + "/conditions/forecast/astronomy/alerts/" + WXlang + "q/" + wungrndQuery);
 					log(LOG_DEBUG,"DEBUG for weather.js. The user.connection object looked like this at the time of error: " + user.connection);
 					log(LOG_DEBUG,"DEBUG for weather.js. The dialup variable looked like this at the time of error: " + dialup);
 					log(LOG_DEBUG,"DEBUG for weather.js. The language defined in /ctrl/modopts.ini is: " + opts.language);
